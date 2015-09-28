@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <% if @leaves.blank? %>
+          <% if is_employee? %>
+            <span>You don't have any leave histroy. </span>
+          <% else %>
+            <span>No Pending leave request.</span>
+          <% end %>
+        <% else %>
+          <table class="table">
+            <tr>
+              <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+              <% @leaves.each do |leave|%>
+                <tr>
+                  <td><%= leave.start_date %></td>
+                  <td><%= leave.end_date %></td>
+                  <td><%= truncate_description(leave.description) %></td>
+                  <td><%= link_to leave.status, leave_path(leave) %></td>
+                </tr>
+              <% end %>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+    </div>
+    <% if is_employee? %>
+      <%= link_to "Apply leave", new_leave_path, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-9">
+    <table class="table">
+      <tr>
+        <th>Employee Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Description</th>
+        <th>Status</th>
+        <% if is_employee? %>
+          <th>Reason</th>
+        <% end %>
+        <% if is_manager? %>
+          <th>Action</th>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= @leave.user.user_name %></td>
+        <td><%= @leave.start_date %></td>
+        <td><%= @leave.end_date %></td>
+        <td><%= @leave.description %></td>
+        <td class="status"><%= @leave.status %></td>
+        <% if is_employee? %>
+          <td><%= @leave.reason %></td>
+        <% end %>
+        <% if is_manager? %>
+          <td>
+            <% if @leave.status == 'pending' %>
+              <a href="javascript:void(0)" class="accept-reject-btn accept" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Accept</a>
+              <a href="javascript:void(0)" class="accept-reject-btn reject" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Reject</a>
+            <% elsif (@leave.status == "accepted") %>
+              <a href="javascript:void(0)" class="accept-reject-btn" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Reject</a>
+            <% else %>
+              <a href="javascript:void(0)" class="accept-reject-btn" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Accept</a>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="modal fade" id="reject-leave-model" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+        <input type="hidden" id="heading-hidden" name="" value="" />
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3"><label>Reason</label></div>
+            <div class="col-md-6">
+              <textarea type="text" class="form-control reason"></textarea>
+              <span class="error" style="display:none; color: #ff0009;">This feild can't be blank.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button", id="reject-save-btn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" >
+$(document).on('click', '.accept-reject-btn', function(){
+  var heading = $(this).text() + " Leave"
+  $('#heading-hidden').attr('value', $(this).text())  
+  $('#reject-leave-model').modal('show')
+  $('#gridSystemModalLabel').text(heading)
+})
+
+$(document).on('click', "#reject-save-btn", function(e){
+  var reason = $('.reason').val()
+  var id = $('.accept-reject-btn').attr('leave-id')
+  var status = $('#heading-hidden').val();
+  status = status == 'Accept' ? 'accepted' : 'rejected'
+  if (reason.length <= 0){
+    $('.error').css('display','block')
+    e.preventDefault()
+  }else{
+    $.ajax({
+      type: "PUT",
+      url: "/leaves/"+id,
+      data: {
+        id: id,
+        reason: reason,
+        status: status
+      },
+      success: function(data) {
+        $('.status').text(data.leave.status)
+        $('.accept-reject-btn').attr('status', data.leave.status)
+        var button_text = data.leave.status == 'accepted' ? 'Reject' : 'Accept'
+        $('.accept-reject-btn').text(button_text);
+        if ($('.accept-reject-btn').length > 1){
+          $('.accept-reject-btn').last().hide();
+        }
+        $('#reject-leave-model').modal('hide')
+        return false;
+      },
+      error: function(data) {
+        return false;
+      }
+    });
+  }
+})
+</script>
