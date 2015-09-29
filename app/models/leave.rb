@@ -5,8 +5,6 @@ class Leave < ActiveRecord::Base
   validate :date_range
 
   belongs_to :user
-  
-  scope :pending, -> { where(status: 'pending') }
 
   private
     def date_range

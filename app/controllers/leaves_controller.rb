@@ -2,7 +2,7 @@ class LeavesController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    if current_user.user_type == 'employee'
+    if current_user.user_type.eql?('employee')
       @leaves = current_user.leaves
     else
       @leaves = Leave.includes(:user).where("status = 'pending'")
@@ -30,17 +30,15 @@ class LeavesController < ApplicationController
   def update
     @leave = Leave.find(params[:id])
     @leave.reason = params[:reason]
-    if @leave.status == 'pending'
-      @leave.status = params[:status]
-    else
-      @leave.status = params[:status] == 'accepted' ? 'accepted' : 'rejected'
-    end  
-    if @leave.save
-      render json: {leave: @leave}
-    else
-      flash[:error] = "Error"
+    @leave.status = params[:status].present? ? 'rejected' : 'accepted'
+    respond_to do |format|
+      if @leave.save
+        flash[:notice] = "You have #{@leave.status} #{@leave.user.user_name}'s leave request."
+        format.js {}
+      else
+        format.js {render layout: false}
+      end
     end
-
   end
   
   private 

@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-9">
           <div class="form-group">
-            <%= f.text_field :first_name, class: 'form-control' %>
+            <%= f.text_field :first_name,  autofocus: true , class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-9">
           <div class="form-group">
-            <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+            <%= f.email_field :email, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -63,18 +63,6 @@
           <div class="form-group">
             <%= f.password_field :password_confirmation, class: 'form-control' %>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class=" col-md-3">
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <%= f.radio_button :user_type, 'employee' %> Are you Employee?
-          </div>
-        </div>
-        <div class="col-md-4">
-          <%= f.radio_button :user_type, 'manager' %> Are you Manager?
         </div>
       </div>
       <div class="row">
