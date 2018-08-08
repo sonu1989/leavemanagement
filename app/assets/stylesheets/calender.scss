@@ -1,0 +1,23 @@
+table tr td.wday-0{
+  background: red !important;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
+table tr td.selected{
+  background: green !important;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
+table tr td.selected a{
+  color: #fff !important;
+}
+table tr td.taken{
+  background: gray !important;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff; 
+}
+table tr td.holiday{
+  background: red !important;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}

@@ -1,0 +1,98 @@
+<div class="row">
+  <h3>Leave Detail</h3>
+  <hr>
+  <div class="container">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+          <div class="col-md-4">
+            <strong>Employee Name :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @leave.user.user_name %>    
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <strong> Start Date :</strong>
+            </div>
+            <div class="col-md-6"> 
+              <%= @leave.start_date %>    
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <strong> End Date :</strong>
+            </div>
+            <div class="col-md-6"> 
+              <%= @leave.end_date %>    
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <strong> Description :</strong>
+            </div>
+            <div class="col-md-6"> 
+              <%= @leave.description %>    
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <strong> Status :</strong>
+            </div>
+            <div class="col-md-6"> 
+              <%= @leave.status %>    
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <% if is_employee? %>
+                <strong>Rejection Reason</strong>
+              <%end%>
+              <% if  is_admin? %>
+                <strong>Action</strong>
+              <% end %>
+            </div>
+            <div class="col-md-6"> 
+              <% if is_admin? %>
+                <input type="hidden" name="role" value="manager" id="user-role">
+                <% if @leave.status == 'pending' %>
+                  <%= link_to 'Approve', admin_leave_path(@leave.id, status: 'approved'), method: 'PUT', :remote=> true %>
+                  <a href="javascript:void(0)" class="accept-reject-btn reject" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Unapproved</a> 
+                <%end%>
+              <%end%>  
+
+            </div>
+          </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reject-leave-model" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel"> Reject Leave</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3"><label>Reason</label></div>
+            <div class="col-md-6">
+              <textarea type="text" class="form-control reason"></textarea>
+              <span class="error" style="display:none; color: #ff0009;">This feild can't be blank.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button", id="reject-save-btn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

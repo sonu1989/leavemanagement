@@ -1,0 +1,28 @@
+<%= form_for @employee, url: admin_dashboard_path(@employee)  do |e| %>
+      
+<div class="form-group">
+  <%= e.label :First_Name %><br>
+  <%= e.text_field :first_name,class: "form-control" %>
+</div>
+
+<div class="form-group">
+  <%= e.label :First_Name %><br>
+  <%= e.text_field :first_name,class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= e.label :Last_Name %><br>
+  <%= e.text_field :last_name,class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= e.label :Mobile_No %><br>
+  <%= e.text_field :mobile,class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= e.label :Role %><br>
+  <%= e.select :role, options_for_select([["Select One", ""], "admin", "manager","employee" ]),class: "form-control" %>
+</div>
+<div class="actions">
+  <%= e.submit "Update", class: "btn btn-primary" %> 
+</div>
+
+<%end%>

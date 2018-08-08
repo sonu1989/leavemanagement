@@ -1,0 +1,10 @@
+ <h1>Welcome  , <%= @leave.user.manager.user_name %></h1>
+    <p>
+      <h4><%= @leave.user.user_name %>, apply for the leave</h4>
+    <% @leave.leave_days.each do|leave_day| %>
+      Leaves :<%= leave_day.date%> : <%= leave_day.leave_type%> <br>
+    <%end%>
+
+    </p>
+
+ 

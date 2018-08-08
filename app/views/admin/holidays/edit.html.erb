@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="container">
+    <div class="col-md-12">
+      <%= simple_form_for @holiday,url: admin_holiday_path do |f| %>
+        <div class="col-md-8">
+          <h3>Edit Holiday</h3>
+          <hr>
+          <div class="col-md-8">
+            <label>Select Occasion Date </label>
+            <input type="text" name="holiday[date]" id="holiday_date" autocomplete="off" class="form-control string optional">
+            <label>Description</label>
+            <%= f.input :occasion, label: false, as: :text %> 
+            <%= f.submit  class: 'btn btn-info' %>
+          </div>
+        </div>  
+      <%end%>
+      <div class="col-md-4"></div>    
+    </div>
+  </div>
+</div>
+ 

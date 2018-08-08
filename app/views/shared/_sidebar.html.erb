@@ -1,0 +1,33 @@
+<nav class="d-none d-md-block bg-dark sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <% if current_user && current_user.admin? %>
+        <li class="nav-item">
+          <%= link_to 'Dashboard', admin_dashboard_index_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Employees', admin_employees_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Leaves', admin_leaves_path, class: 'nav-link' %>
+        </li>
+         <li class="nav-item">
+          <%= link_to 'Holidays', admin_holidays_path, class: 'nav-link' %>
+        </li>
+      <% elsif current_user && current_user.employee? %>
+        <li class="nav-item">
+          <li><%= link_to "View Leaves", leaves_path, class: 'nav-link', method: :get %></li>
+          <li><%= link_to "Apply Leave", new_leave_path, class: 'nav-link' , method: :get %></li>
+          <li><%= link_to "Apply Leave For TM",new_leave_path(:team_member =>true), class: 'nav-link' , method: :get %></li>
+        </li>
+      <% elsif current_user && current_user.manager? %> 
+        <li class="nav-item">
+          <li><%= link_to "View Leaves", leaves_path, class: 'nav-link' %></li>
+          <li><%= link_to "Apply Leave", new_leave_path, class: 'nav-link' %></li>
+          <li><%= link_to "Apply Leave For TM",new_leave_path(:team_member =>true), class: 'nav-link' %> 
+          </li>  
+        </li> 
+      <% end %>
+    </ul>
+  </div>
+</nav>

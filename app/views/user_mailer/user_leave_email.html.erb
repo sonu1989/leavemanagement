@@ -1,0 +1,9 @@
+ <h1>Welcome  , <%= @leave.user.user_name %></h1>
+    <p>
+      
+      You have successfully applied for the leave ,
+      <% @leave.leave_days.each do|leave_day| %>
+      Leaves :<%= leave_day.date%> : <%= leave_day.leave_type%> <br>
+      <%end%>
+    </p>
+

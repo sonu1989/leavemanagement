@@ -1,0 +1,12 @@
+<div class="col-md-8">
+  <%= f.input :first_name %>
+  <%= f.input :last_name %> 
+  <%= f.input :mobile %>
+  <% if f.object.new_record? %>
+    <%= f.input :password %>
+  <%end%>     
+  <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']] %>
+  <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first %> 
+  <%= f.input :email %> 
+  <%= f.submit f.object.id.present? ? 'Update Employee' : 'Add Employee' , class: 'btn btn-info' %>
+</div>

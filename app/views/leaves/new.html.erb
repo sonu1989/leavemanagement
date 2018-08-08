@@ -1,89 +1,47 @@
 <div class="row">
-  <div class="col-md-3">
-  </div>
-  <div class="col-md-6">
-    <h2>Apply for leave </h2>
-    <% if @leave.errors.any? %>
-       <div class="row">
-        <div class=" col-md-3">
-        </div>
+  <h3>Apply Leave</h3>
+  <hr>
+  <div class="container">
+    <div class="col-md-8">
+      <%= simple_form_for @leave, url: leaves_path do |f| %>
         <div class="col-md-9">
-          <ul>
-            <% @leave.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
+          <%if params[:team_member] =="true" %>
+            <label>Select Employee</label>
+            <%= f.input :user_id, label: false ,collection: employee_options, label_method: :second, value_method: :first %>
+          <% else %>
+            <%= f.input :user_id, :as => :hidden, input_html: {value: current_user.id } %>
+          <%end%>
+          <% @taken_leave_days = leave_already_taken_day %>
+          <%= month_calendar do |date| %>
+            <% holiday = is_holiday(date.strftime('%d/%m/%Y')) %>
+            <% if date.sunday? %>
+              <span class="day" title="Sunday"><%= date.day %></span>
+            <% elsif holiday.present? %>
+              <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
+            <% elsif @taken_leave_days.present? && @taken_leave_days.include?(date.strftime('%d/%m/%Y')) %>
+              <span class="day taken" title="Applied/Taken"><%= date.day %></span>
+            <% else %>
+              <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
             <% end %>
-          </ul>
+          <%end%>
+          <%= f.input :description %>
+          <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave'  %>
         </div>
-      </div>
+        <div class="col-md-3">
+          <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last %>
+          <p style="display: none;" class='leave_type error'>Please Select Leave Type</p>
+        </div>
       <% end %>
-    <%= form_for @leave do |f| %>
-      <div class="row">
-        <div class=" col-md-3">
-          <label>Start Date</label>
-        </div>
-        <div class="col-md-9">
-          <div class="form-group">
-            <%= f.text_field :start_date, id: "dpd1", class: 'form-control' %>
-          </div>
-        </div>
+    </div>
+    <hr>
+    <div class="row col-md-9">
+        <h5>This Month Holidays </h5>
+        <ul>
+          <% holidays = month_holidays(params[:start_date].present? ? Date.parse(params[:start_date]) : Time.now) %>
+          <% holidays.each do |holiday|%>
+            <li><%=holiday.date.day %>, <%=holiday.occasion %></li>
+          <% end %>
+        </ul>
       </div>
-      <div class="row">
-        <div class=" col-md-3">
-          <label>End Date</label>
-        </div>
-        <div class="col-md-9">
-          <div class="form-group">
-            <%= f.text_field :end_date, id: "dpd2", class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class=" col-md-3">
-          <%= f.label :description %>
-        </div>
-        <div class="col-md-9">
-          <div class="form-group">
-            <%= f.text_area :description, class: 'form-control' %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class=" col-md-3">
-        </div>
-        <div class="col-md-9">
-          <div class="form-group">
-            <%= f.submit 'Apply', class: 'btn btn-success' %>
-            <%= link_to 'Back', :back, class: 'btn btn-primary' %>
-          </div>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>
-<script type="text/javascript">
-  var nowTemp = new Date();
-  var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-   
-  var checkin = $('#dpd1').datepicker({
-    format: 'dd-mm-yyyy',
-    onRender: function(date) {
-    return date.valueOf() < now.valueOf() ? 'disabled' : '';
-    }
-  }).on('changeDate', function(ev) {
-    if (ev.date.valueOf() > checkout.date.valueOf()) {
-      var newDate = new Date(ev.date)
-      newDate.setDate(newDate.getDate() + 1);
-      checkout.setValue(newDate);
-    }
-    checkin.hide();
-    $('#dpd2')[0].focus();
-    }).data('datepicker');
-    var checkout = $('#dpd2').datepicker({
-    format: 'dd-mm-yyyy',
-    onRender: function(date) {
-      return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-      }
-    }).on('changeDate', function(ev) {
-    checkout.hide();
-    }).data('datepicker');
-</script>

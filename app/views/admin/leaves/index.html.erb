@@ -1,0 +1,58 @@
+<div class="row">
+  <h3>Leaves</h3>
+  <hr>
+  <div class="container">
+    <div class="col-md-12">     
+        <div class="row">
+          <div class="col-md-4">
+            <%= form_tag(admin_leaves_path, method: 'get') do %>
+                <div class="col-md-6">
+                  <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Employee ID ') %>
+                </div>
+                <%= submit_tag("Search", name: nil, class: 'btn btn-info') %>
+              <% end %>
+          </div>
+          <div class="col-md-6">
+            <%= link_to "Apply Leave for Team Member", new_admin_leave_path, class: 'pull-right' %>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Emp Name</th>
+              <th>Emp ID</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @leaves.each do |leave|%>
+              <tr>
+                <td><%= leave.user.user_name  rescue '' %></td>
+                <td><%= leave.user.employee_id rescue ''%></td>
+                <td><%= leave.start_date.strftime("%d-%m-%Y") rescue ''%></td>
+                <td><%= leave.end_date.strftime("%d-%m-%Y") rescue ''%></td>
+                <td><%= truncate_description(leave.description) %></td>
+                <td><%= leave.status %></td>
+                <td><%= link_to admin_leave_path(leave) do %>
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                <% end %> |
+                 <%= link_to admin_leave_path(leave),data: {:confirm => 'Are you sure?'}, :method => :delete do %> 
+                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                <% end %>
+               </td>             
+              </tr>
+            <% end %>
+          </tbody>  
+        </table>
+    </div>
+  </div> 
+</div>
+<%= will_paginate @leaves, renderer: BootstrapPagination::Rails %>
+
+
+
+ 

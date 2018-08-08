@@ -1,0 +1,40 @@
+<div class="row"> 
+  <div class="col-md-8">
+    <h3>Apply for leave </h3>
+    <hr> 
+    <%= simple_form_for @leave, url: admin_leaves_path do |f| %>     
+      <div class="col-md-9">
+        <label>Select Employee</label>
+        <%= f.input :user_id, label: false ,collection: employee_options, label_method: :second, value_method: :first %>
+        <% @taken_leave_days = leave_already_taken_day %>
+        <%= month_calendar do |date| %>
+          <% holiday = is_holiday(date.strftime('%d/%m/%Y')) %>
+          <% if date.sunday? %>
+            <span class="day"><%= date.day %></span>
+          <% elsif holiday.present? %>
+            <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
+          <% elsif @taken_leave_days.present? && @taken_leave_days.include?(date.strftime('%d/%m/%Y')) %>
+            <span class="day taken" title="Applied/Taken"><%= date.day %></span>
+          <% else %>
+            <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
+          <% end %>
+        <%end%>
+        <%= f.input :description %>
+         <div class="col-md-3">
+          <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last %>
+          <p style="display: none;" class='leave_type error'>Please Select Leave Type</p>
+        </div>
+        <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave' %>
+      </div>  
+    <% end %>
+    <div class="row col-md-9">
+      <h5>This Month Holidays </h5>
+      <ul>
+        <% holidays = month_holidays(params[:start_date].present? ? Date.parse(params[:start_date]) : Time.now) %>
+        <% holidays.each do |holiday|%>
+          <li><%=holiday.date.day %>, <%=holiday.occasion %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

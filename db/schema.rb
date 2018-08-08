@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2015_09_26_155906) do
+ActiveRecord::Schema.define(version: 2018_08_06_101618) do
+
+  create_table "balances", force: :cascade do |t|
+    t.integer "user_id"
+    t.decimal "main_balance"
+    t.decimal "balance_added"
+    t.decimal "balance_deducted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.date "date"
+    t.string "occasion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "leave_days", force: :cascade do |t|
+    t.integer "leave_id"
+    t.date "date"
+    t.string "leave_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "leaves", force: :cascade do |t|
     t.integer "user_id"
@@ -21,6 +45,8 @@ ActiveRecord::Schema.define(version: 2015_09_26_155906) do
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false
+    t.text "days"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,7 +65,10 @@ ActiveRecord::Schema.define(version: 2015_09_26_155906) do
     t.string "first_name"
     t.string "last_name"
     t.string "mobile"
-    t.string "user_type", default: "employee"
+    t.integer "role", default: 0
+    t.boolean "deleted", default: false
+    t.integer "employee_id"
+    t.integer "manager_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

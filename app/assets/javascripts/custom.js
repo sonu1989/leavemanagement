@@ -6,14 +6,21 @@ $(document).on('click', "#reject-save-btn", function(e){
   var reason = $('.reason').val();
   var id = $('.accept-reject-btn').attr('leave-id');
   var status = $('#heading-hidden').val();
-  status = status == 'Accept' ? 'accepted' : 'rejected';
+  status = 'unapproved';
+  url = ''
+  role = $("#user-role").val()
+  if (role == 'manager'){
+    url = "/leaves/"+id
+  }else{
+    url = "/admin/leaves/"+id
+  }
   if (reason.length <= 0){
     $('.error').css('display','block');
     e.preventDefault();
   }else{
     $.ajax({
       type: "PUT",
-      url: "/leaves/"+id,
+      url: url,
       data: {
         id: id,
         reason: reason,
@@ -32,3 +39,11 @@ $(document).on('click', "#reject-save-btn", function(e){
     });
   }
 })
+$(document).ready(function(){
+  $('#holiday_date').datepicker({format: 'dd-mm-yyyy'});
+
+  $('#holiday_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+
+});
