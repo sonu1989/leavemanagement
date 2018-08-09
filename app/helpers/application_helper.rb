@@ -1,6 +1,6 @@
 module ApplicationHelper
   def employee_options
-    User.where.not('role =? OR id=?', 'admin', current_user.id).map {|u| [u.id, u.user_name.to_s.titleize]}
+    User.where.not(role: 'admin').where.not(id: current_user.id).map {|u| [u.id, u.user_name.to_s.titleize]}
   end
 
   def assign_managers

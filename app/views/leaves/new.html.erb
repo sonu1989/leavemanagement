@@ -16,6 +16,8 @@
             <% holiday = is_holiday(date.strftime('%d/%m/%Y')) %>
             <% if date.sunday? %>
               <span class="day" title="Sunday"><%= date.day %></span>
+            <% elsif date.past? %>
+              <span class="past"><%= date.day %></span>
             <% elsif holiday.present? %>
               <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
             <% elsif @taken_leave_days.present? && @taken_leave_days.include?(date.strftime('%d/%m/%Y')) %>
