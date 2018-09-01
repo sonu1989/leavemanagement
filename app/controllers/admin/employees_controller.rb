@@ -5,9 +5,9 @@ class Admin::EmployeesController < Admin::AuthenticationController
       term = params[:search]
       @employees = User.where.not(role: 'admin').where('first_name LIKE (?) or employee_id =?', "%#{term}%", term).paginate(:page => params[:page], :per_page => 5)
     elsif params[:employee_report] == 'true'
-      @employees = User.includes(:balances).where.not(role: 'admin')
+      @employees = User.includes(:balances).where.not(role: 'admin').order('employee_id ASC')
     else
-      @employees = User.all_employees.paginate(:page => params[:page], :per_page => 10)
+      @employees = User.all_employees.order('employee_id ASC').paginate(:page => params[:page], :per_page => 10)
     end
     respond_to do |format|
       format.html
