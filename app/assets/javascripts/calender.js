@@ -24,15 +24,22 @@ $(document).on('turbolinks:load', function() {
   // Save leave
   $('#save_leave').on('click', function(e){
     var form_url = $(this).parents('form').attr('action')
-    console.log(days)
     description = $("#leave_description").val()
     user_id = $("#leave_user_id").val()
     e.preventDefault();
+    if(days.length < 1){
+      $('.description_error').show().text('Select at least one date');
+    }
+    else if (description.length < 1){
+      $('.description_error').show().text("Description can't blank");
+    }
+    else{
       $.ajax({
-      url: form_url,
-      type: "POST",
-      data: {leave: {days: days, description: description, user_id: user_id}}
-    });
+        url: form_url,
+        type: "POST",
+        data: {leave: {days: days, description: description, user_id: user_id}}
+      });
+    }
   });
 
   $('a').on('click', function(e){

@@ -19,7 +19,7 @@ class LeavesController < ApplicationController
   def create
     @leave = Leave.new(leave_params)
     @leave.user =  current_user if leave_params[:user_id].blank?
-    if @leave.save
+    if params[:leave][:days].present? && @leave.save
       params[:leave][:days].each do |k,v|
         @leave.leave_days.create(date: v[:date] ,leave_type: v[:leave_type])
       end
@@ -29,6 +29,7 @@ class LeavesController < ApplicationController
       flash[:notice] = "Leave placed successfully."   
       redirect_to leaves_path
     else
+      flash[:alert] = "#{@leave.errors.present? ? @leave.errors.full_messages.to_sentence : 'Select at least one date'}" 
       render :new
     end
   end

@@ -25,8 +25,9 @@
             <% else %>
               <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
             <% end %>
-          <%end%>
+          <% end %>
           <%= f.input :description %>
+          <label class="error description_error" style="display: none;">Description can't blank</label><br>
           <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave'  %>
         </div>
         <div class="col-md-3">
