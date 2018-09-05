@@ -1,5 +1,5 @@
 <div class="row">
- <h3>Leaves (Your Leave Balance: <%=current_user.leave_balance %>)</h3>
+ <h3>Leaves (Your Leave Balance: <span class="<%= current_user.leave_balance < 0 ? 'red-balance' : 'green-balance' %>"><%=current_user.leave_balance %></span>)</h3>
  <hr>
   <div class="row">
     <div class="col-md-12">
