@@ -12,10 +12,17 @@
             <%= f.input :user_id, :as => :hidden, input_html: {value: current_user.id } %>
           <%end%>
           <% @taken_leave_days = leave_already_taken_day %>
+          <% @alternate_saturdays = alternate_saturday %>
+          <br>
+          <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last %>
+          <p style="display: none;" class='leave_type error'>Please Select Leave Type</p>
+          <br>
           <%= month_calendar do |date| %>
             <% holiday = is_holiday(date.strftime('%d/%m/%Y')) %>
             <% if date.sunday? %>
               <span class="day" title="Sunday"><%= date.day %></span>
+            <% elsif @alternate_saturdays.include?(date.strftime('%d/%m/%Y')) %>
+              <span class="day saturday-off" title="Saturday Off" ><%= date.day %></span>
             <% elsif date.past? %>
               <span class="past"><%= date.day %></span>
             <% elsif holiday.present? %>
@@ -31,8 +38,7 @@
           <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave'  %>
         </div>
         <div class="col-md-3">
-          <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last %>
-          <p style="display: none;" class='leave_type error'>Please Select Leave Type</p>
+          
         </div>
       <% end %>
     </div>

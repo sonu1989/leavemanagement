@@ -60,6 +60,11 @@ $(document).on('turbolinks:load', function() {
     $(element).parent().attr('title', title)
     $(element).parent().addClass('holiday');
   });
+  $('.simple-calendar').find('.saturday-off').each(function(index, element){
+    title = $(element).attr('title')
+    $(element).parent().attr('title', title)
+    $(element).parent().addClass('saturday-off');
+  });
 
 });
 

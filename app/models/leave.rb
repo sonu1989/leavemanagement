@@ -44,10 +44,7 @@ class Leave < ActiveRecord::Base
 
   # Deduct leave balance
   def deduct_leave_balance
-    full_days_count = self.leave_days.where('lower(leave_type) =?', FULL_DAY.downcase).count
-    half_days_count = self.leave_days.count - full_days_count
-
-    total_days_count = full_days_count + (half_days_count.to_f/2)
+    total_days_count = leave_taken_days
     user = self.user
     last_balance = user.balances.order('created_at DESC').first
     if last_balance.present?
@@ -56,7 +53,21 @@ class Leave < ActiveRecord::Base
       main_balance = 0 - total_days_count
     end
     user.balances.create(main_balance: main_balance, balance_deducted: total_days_count)
-  end      
+  end
+
+  def update_balance_for_cancelled_leave
+    user = self.user
+    last_balance = user.balances.order('created_at DESC').first
+    main_balance = last_balance.main_balance + leave_taken_days
+    user.balances.create(main_balance: main_balance, balance_added: leave_taken_days)
+  end
+
+  def leave_taken_days
+    full_days_count = self.leave_days.where('lower(leave_type) =?', FULL_DAY.downcase).count
+    half_days_count = self.leave_days.count - full_days_count
+    total_days_count = full_days_count + (half_days_count.to_f/2)
+    total_days_count
+  end   
 
   private
     def date_range

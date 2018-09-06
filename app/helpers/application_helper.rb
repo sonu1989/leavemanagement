@@ -22,7 +22,7 @@ module ApplicationHelper
   def leave_already_taken_day
     if params[:team_member] != 'true'
       user = current_user
-      leaves = user.leaves.includes(:leave_days)
+      leaves = user.leaves.where.not(status: 'cancelled').includes(:leave_days)
       @taken_leave_days = leaves.map{|leave| leave.leave_days.map{|ld| ld.date.strftime('%d/%m/%Y') rescue '' }}
       @taken_leave_days.flatten
     end
@@ -42,5 +42,17 @@ module ApplicationHelper
     start_date = date.at_beginning_of_month
     end_date = date.at_end_of_month
     Holiday.where(date: (start_date)..(end_date))
-  end  
+  end
+
+  def alternate_saturday
+    start_date = '08/09/2018'.to_date
+    end_date = Date.today + 1.year
+    my_days = [6]
+    all_saturdays = (start_date..end_date).to_a.select {|k| my_days.include?(k.wday)}
+    alt_saturdays = []
+    all_saturdays.each_with_index do |day, index|
+      alt_saturdays << day.strftime('%d/%m/%Y') if (index % 2 == 0)
+    end
+    alt_saturdays
+  end
 end

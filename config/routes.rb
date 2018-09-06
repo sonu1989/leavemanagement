@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  resources :leaves
+  resources :leaves do
+    patch :cancel, on: :member
+  end
   resources :employees
 
   namespace :admin do

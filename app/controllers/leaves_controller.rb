@@ -53,6 +53,19 @@ class LeavesController < ApplicationController
       end
     end
   end
+
+  def cancel
+    @leave = Leave.find(params[:id])
+    @leave.status = 'cancelled'
+    if @leave.save
+      @leave.update_balance_for_cancelled_leave
+      flash[:notice] = "Your leave has been cancelled."
+      redirect_to leaves_path
+    else
+      flash[:alert] = "Unable to cancel please try after sometime."
+      redirect_to leaves_path
+    end
+  end
   
   private 
     def leave_params
