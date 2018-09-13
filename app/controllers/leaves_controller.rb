@@ -13,7 +13,7 @@ class LeavesController < ApplicationController
   end
 
   def new
-    @leave = current_user.leaves.new
+    @leave = Leave.new
   end
 
   def create

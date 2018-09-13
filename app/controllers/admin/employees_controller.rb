@@ -22,6 +22,7 @@ class Admin::EmployeesController < Admin::AuthenticationController
   def create
     @employee = User.all_employees.new(user_params)
     if @employee.save
+      @employee.add_leave_balance
       redirect_to admin_employees_path
     else
       render 'new'
@@ -54,7 +55,7 @@ class Admin::EmployeesController < Admin::AuthenticationController
 
   private
     def user_params
-     params.require(:user).permit(:first_name, :last_name, :mobile,:role ,:email,:password,:manager_id)
+     params.require(:user).permit(:first_name, :last_name, :mobile,:role ,:email,:password,:manager_id, :joining_date)
     end
     
 end

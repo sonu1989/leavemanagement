@@ -8,5 +8,6 @@
   <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']] %>
   <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first %> 
   <%= f.input :email %> 
+  <%= f.input :joining_date, as: :date, html5: true %>
   <%= f.submit f.object.id.present? ? 'Update Employee' : 'Add Employee' , class: 'btn btn-info' %>
 </div>
