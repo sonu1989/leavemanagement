@@ -16,6 +16,7 @@ class Admin::LeavesController < Admin::AuthenticationController
   def create
     @leave = Leave.new(leave_params)
     @leave.user =  current_user if leave_params[:user_id].blank?
+    @leave.placed_by =  current_user
     if @leave.save
       params[:leave][:days].each do |k,v|
         @leave.leave_days.create(date: v[:date] ,leave_type: v[:leave_type])

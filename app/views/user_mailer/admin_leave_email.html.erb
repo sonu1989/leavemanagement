@@ -1,9 +1,39 @@
- <h1>Welcome ,admin@mail.com</h1>
-    <p>
-      <h4><%= @leave.user.user_name %>,apply for the leave</h4>
-      <% @leave.leave_days.each do|leave_day| %>
-          Leaves :<%= leave_day.date%> : <%= leave_day.leave_type%> <br>
-      <%end%>
-    </p>
-
- 
+<p>Hello <%= @admin.user_name %>,</p>
+<p><%=@leave.user.user_name %> has applied leave.</p>
+<table class="table">
+  <tbody>
+    <tr>
+      <td colspan="2">Leave Detail</td>
+    </tr>
+    <% @leave.leave_days.each do|leave_day| %>
+      <tr>
+        <td>Employee name</td>
+        <td><%= @leave.user.user_name %></td>
+      </tr>
+      <tr>
+        <td>Employee Id</td>
+        <td><%= @leave.user.employee_id %></td>
+      </tr>
+      <tr>
+        <td>Placed By</td>
+        <td><%= @leave.placed_by.user_name rescue '' %> (<%= @leave.placed_by.employee_id rescue '' %>)</td>
+      </tr>
+      <tr>
+        <td>Placed Date</td>
+        <td><%= leave_day.created_at.strftime('%d/%m/%Y') %></td>
+      </tr>
+      <tr>
+        <td>Leave Date</td>
+        <td><%= leave_day.date.strftime('%d/%m/%Y')%>(<%= leave_day.leave_type%>)</td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td><%= @leave.status%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+  Thanks,<br>
+  HR Team
+</p>

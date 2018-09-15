@@ -1,7 +1,6 @@
 class LeavesController < ApplicationController
   before_action :authenticate_user!
 
-  
   def index
     if current_user.manager?
       user_ids = current_user.employees.pluck(:id)
@@ -19,9 +18,10 @@ class LeavesController < ApplicationController
   def create
     @leave = Leave.new(leave_params)
     @leave.user =  current_user if leave_params[:user_id].blank?
+    @leave.placed_by_id = current_user.id
     if params[:leave][:days].present? && @leave.save
       params[:leave][:days].each do |k,v|
-        @leave.leave_days.create(date: v[:date] ,leave_type: v[:leave_type])
+      @leave.leave_days.create(date: v[:date] ,leave_type: v[:leave_type])
       end
       @leave.assign_start_end_date
       @leave.deduct_leave_balance
@@ -43,7 +43,7 @@ class LeavesController < ApplicationController
   def update
     @leave = Leave.find(params[:id])
     @leave.reason = params[:reason]
-    @leave.status = params[:status].present? ? 'Approved' : 'Unapproved'
+    @leave.status = (params[:status].to_s.downcase == 'unapproved') ? 'Unapproved' : 'Approved'
     respond_to do |format|
       if @leave.save
         flash[:notice] = "You have #{@leave.status} #{@leave.user.user_name}'s leave request."

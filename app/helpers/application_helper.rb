@@ -23,7 +23,7 @@ module ApplicationHelper
     if params[:team_member] != 'true'
       user = current_user
       leaves = user.leaves.where.not(status: 'cancelled').includes(:leave_days)
-      @taken_leave_days = leaves.map{|leave| leave.leave_days.map{|ld| ld.date.strftime('%d/%m/%Y') rescue '' }}
+      @taken_leave_days = leaves.map{|leave| leave.leave_days.map{|ld| [{date: ld.date.strftime('%d/%m/%Y'), type: ld.leave_type}] rescue '' }}
       @taken_leave_days.flatten
     end
   end
@@ -54,5 +54,8 @@ module ApplicationHelper
       alt_saturdays << day.strftime('%d/%m/%Y') if (index % 2 == 0)
     end
     alt_saturdays
+  end
+  def taken_or_applied(date)
+    leave_already_taken_day.present? ? leave_already_taken_day.select{|leave_day| leave_day if leave_day[:date] == date} : []
   end
 end

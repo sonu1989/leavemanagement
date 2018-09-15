@@ -30,7 +30,9 @@
                 <td><%= truncate_description(leave.description) %></td>
                 <td class="status"><%= leave.status %></td>
                 <td><%= link_to "View", leave_path(leave) %></td>
-                <td><%= link_to "Cancel", cancel_leave_path(leave), method: 'patch' %></td>
+                <% unless leave.status.eql?('cancelled') && leave.end_date > Date.today %>
+                  <td><%= link_to "Cancel", cancel_leave_path(leave), method: 'patch' %></td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>  

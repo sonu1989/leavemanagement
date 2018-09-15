@@ -6,7 +6,9 @@ class Leave < ActiveRecord::Base
   default_scope {where(deleted: false)}
   serialize :days, Hash
   attr_accessor :leave_type
+
   has_many :leave_days, dependent: :destroy
+  belongs_to :placed_by, class_name: "User", foreign_key: :placed_by_id
 
   FULL_DAY = 'Full Day '
   

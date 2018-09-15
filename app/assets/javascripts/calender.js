@@ -45,7 +45,7 @@ $(document).on('turbolinks:load', function() {
   $('a').on('click', function(e){
     url =  $(this).attr('href')
     if(url.includes('/leaves/new?')){
-      window.location.reload()
+      window.location.url
     }
   })
     
@@ -64,6 +64,12 @@ $(document).on('turbolinks:load', function() {
     title = $(element).attr('title')
     $(element).parent().attr('title', title)
     $(element).parent().addClass('saturday-off');
+  });
+
+  $('.simple-calendar').find('.orange').each(function(index, element){
+    title = $(element).attr('title')
+    $(element).parent().attr('title', title)
+    $(element).parent().addClass('orange');
   });
 
 });

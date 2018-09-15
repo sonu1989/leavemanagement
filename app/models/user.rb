@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     balance ? balance.main_balance.to_f : 0.0
   end
   
+  def unapproved_leaves
+    unapproved_leave = self.leaves.where("start_date >= ? AND start_date <= ?", Time.now.beginning_of_month, Time.now.end_of_month).where(status: 'Unapproved').count
+  end
+
   def add_leave_balance
     month = Time.now.month
     number_of_day = ((month % 3) == 0 ? 2 : 1)
@@ -57,13 +61,13 @@ class User < ActiveRecord::Base
   end
 
   def self.to_csv
-    attributes = ['Employee Id', 'Name', 'Email', 'Leave Balance']
+    attributes = ['Employee Id', 'Name', 'Email', 'Leave Balance', 'Joining Date', 'Unapproved leaves']
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
 
       all.each do |user|
-        employee = [user.employee_id,user.user_name,user.email,user.leave_balance, user.joining_date]
+        employee = [user.employee_id,user.user_name,user.email,user.leave_balance, user.joining_date, user.unapproved_leaves]
         csv << employee
       end
     end
