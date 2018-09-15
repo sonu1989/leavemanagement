@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_09_14_095737) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "balances", force: :cascade do |t|
     t.integer "user_id"
     t.decimal "main_balance"
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_095737) do
     t.string "first_name"
     t.string "last_name"
     t.string "mobile"
-    t.integer "role"
+    t.integer "role", default: 0
     t.boolean "deleted", default: false
     t.integer "employee_id"
     t.integer "manager_id"
