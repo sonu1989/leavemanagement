@@ -55,7 +55,16 @@ module ApplicationHelper
     end
     alt_saturdays
   end
+
   def taken_or_applied(date)
     leave_already_taken_day.present? ? leave_already_taken_day.select{|leave_day| leave_day if leave_day[:date] == date} : []
+  end
+
+  def leave_days_with_type(leave)
+    leave_days = [] 
+    leave.leave_days.each do|leave_day| 
+      leave_days << "#{leave_day.date.strftime('%d/%m/%Y')}(#{leave_day.leave_type})" 
+    end
+    leave_days.join(' ,')
   end
 end

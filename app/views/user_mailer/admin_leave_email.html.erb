@@ -5,7 +5,6 @@
     <tr>
       <td colspan="2">Leave Detail</td>
     </tr>
-    <% @leave.leave_days.each do|leave_day| %>
       <tr>
         <td>Employee name</td>
         <td><%= @leave.user.user_name %></td>
@@ -20,17 +19,16 @@
       </tr>
       <tr>
         <td>Placed Date</td>
-        <td><%= leave_day.created_at.strftime('%d/%m/%Y') %></td>
+        <td><%= @leave.created_at.strftime('%d/%m/%Y') %></td>
       </tr>
       <tr>
         <td>Leave Date</td>
-        <td><%= leave_day.date.strftime('%d/%m/%Y')%>(<%= leave_day.leave_type%>)</td>
+        <td><%= leave_days_with_type(@leave) %></td>
       </tr>
       <tr>
         <td>Status</td>
-        <td><%= @leave.status%></td>
+        <td><%= @leave.status.to_s.capitalize %></td>
       </tr>
-    <% end %>
   </tbody>
 </table>
 <p>
