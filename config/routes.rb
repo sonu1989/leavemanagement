@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   resources :employees
 
   namespace :admin do
-   resources :dashboard, only: [:index]
-   resources :holidays
-   resources :employees
-   resources :leaves
+    resources :dashboard, only: [:index]
+    resources :holidays
+    resources :employees
+    resources :leaves do
+      patch :cancel, on: :member
+    end
   end 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

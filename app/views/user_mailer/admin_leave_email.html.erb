@@ -1,34 +1,54 @@
 <p>Hello <%= @admin.user_name %>,</p>
-<p><%=@leave.user.user_name %> has applied leave.</p>
+<% if @action.eql?("create") %>
+  <p><%= @leave.user.user_name %> has applied leave.</p>
+<% else %>
+  <p>Leave status of <%= @leave.user.user_name %> has been updated successfully.</p>
+<% end %>
 <table class="table">
   <tbody>
     <tr>
       <td colspan="2">Leave Detail</td>
     </tr>
+    <tr>
+      <td>Employee name</td>
+      <td><%= @leave.user.user_name %></td>
+    </tr>
+    <tr>
+      <td>Employee Id</td>
+      <td><%= @leave.user.employee_id %></td>
+    </tr>
+    <tr>
+      <td>Placed By</td>
+      <td><%= @leave.placed_by.user_name rescue '' %> (<%= @leave.placed_by.employee_id rescue '' %>)</td>
+    </tr>
+    <tr>
+      <td>Placed Date</td>
+      <td><%= @leave.created_at.strftime('%d/%m/%Y') %></td>
+    </tr>
+    <tr>
+      <td>Leave Date</td>
+      <td><%= leave_days_with_type(@leave) %></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td><%= @leave.description %></td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td><%= @leave.status.to_s.capitalize %></td>
+    </tr>
+    <% if @action.eql?("update") || @action.eql?("cancel") %>
       <tr>
-        <td>Employee name</td>
-        <td><%= @leave.user.user_name %></td>
+        <td><%= @leave.status %> by</td>
+        <td><%= @leave.status_updated_by.user_name %></td>
       </tr>
-      <tr>
-        <td>Employee Id</td>
-        <td><%= @leave.user.employee_id %></td>
-      </tr>
-      <tr>
-        <td>Placed By</td>
-        <td><%= @leave.placed_by.user_name rescue '' %> (<%= @leave.placed_by.employee_id rescue '' %>)</td>
-      </tr>
-      <tr>
-        <td>Placed Date</td>
-        <td><%= @leave.created_at.strftime('%d/%m/%Y') %></td>
-      </tr>
-      <tr>
-        <td>Leave Date</td>
-        <td><%= leave_days_with_type(@leave) %></td>
-      </tr>
-      <tr>
-        <td>Status</td>
-        <td><%= @leave.status.to_s.capitalize %></td>
-      </tr>
+      <% if @leave.status.eql?"Unapproved"%>
+        <tr>
+          <td>Reason</td>
+          <td><%= @leave.reason %></td>
+        </tr>
+      <% end %>
+    <%end%>
   </tbody>
 </table>
 <p>

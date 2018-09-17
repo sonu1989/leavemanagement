@@ -25,7 +25,7 @@ class LeavesController < ApplicationController
       end
       @leave.assign_start_end_date
       @leave.deduct_leave_balance
-      @leave.send_notifications(current_user)
+      @leave.send_notifications(current_user, 'create')
       flash[:notice] = "Leave placed successfully."   
       redirect_to leaves_path
     else
@@ -38,14 +38,16 @@ class LeavesController < ApplicationController
     @leave = Leave.find(params[:id])
   end
 
-  
-
   def update
     @leave = Leave.find(params[:id])
     @leave.reason = params[:reason]
     @leave.status = (params[:status].to_s.downcase == 'unapproved') ? 'Unapproved' : 'Approved'
+    if params[:status]
+      @leave.status_updated_by_id = current_user.id
+    end
     respond_to do |format|
       if @leave.save
+        @leave.send_notifications(current_user, 'update')
         flash[:notice] = "You have #{@leave.status} #{@leave.user.user_name}'s leave request."
         format.js {}
       else
@@ -57,7 +59,9 @@ class LeavesController < ApplicationController
   def cancel
     @leave = Leave.find(params[:id])
     @leave.status = 'cancelled'
+    @leave.status_updated_by_id = current_user.id
     if @leave.save
+      @leave.send_notifications(current_user, 'cancel')
       @leave.update_balance_for_cancelled_leave
       flash[:notice] = "Your leave has been cancelled."
       redirect_to leaves_path

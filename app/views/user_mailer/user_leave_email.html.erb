@@ -1,5 +1,9 @@
 <p>Hello <%=@leave.user.user_name %>,</p>
-<p>Your leave has been applied successfully.</p>
+<% if @action.eql?("create") %>
+  <p>Your leave has been applied successfully.</p>
+<% else %>
+  <p>Your leave status has been updated successfully. </p>
+<% end %>
 <table class="table">
   <tbody>
     <tr>
@@ -26,9 +30,25 @@
       <td><%= leave_days_with_type(@leave) %>)</td>
     </tr>
     <tr>
+      <td>Description</td>
+      <td><%= @leave.description %></td>
+    </tr>
+    <tr>
       <td>Status</td>
       <td><%= @leave.status.to_s.capitalize %></td>
     </tr>
+    <%if @action.eql?("update") || @action.eql?("cancel")%>
+      <tr>
+        <td><%= @leave.status %> by</td>
+        <td><%= @leave.status_updated_by.user_name %></td>
+      </tr>
+      <% if @leave.status.eql?"Unapproved"%>
+        <tr>
+          <td>Reason</td>
+          <td><%= @leave.reason %></td>
+        </tr>
+      <% end %>
+    <%end%>
   </tbody>
 </table>
 <p>

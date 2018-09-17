@@ -31,16 +31,16 @@
               <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
             <% elsif @taken_leave_days.present? && taken_applied.present? %>
               <% if taken_applied.first[:type] == 'Full Day ' %>
-                <span class="day taken" title="Applied/Taken"><%= date.day %></span>
+                <span class="day taken" title="Applied/Taken(Full Day)"><%= date.day %></span>
               <% else %>
-                <span class="day taken orange" title="Applied/Taken"><%= date.day %></span>
+                <span class="day taken orange" title="Applied/Taken(Half Day)"><%= date.day %></span>
               <% end %>
             <% else %>
               <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
             <% end %>
           <% end %>
           <%= f.input :description %>
-          <label class="error description_error" style="display: none;">Description can't blank</label>
+          <p class="error description_error" style="display: none;">Description can't blank</p>
           <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave'  %>
         <div class="holiday-list">
           <h5>This Month Holidays </h5>

@@ -23,10 +23,11 @@ class Admin::LeavesController < Admin::AuthenticationController
       end
       @leave.assign_start_end_date
       @leave.deduct_leave_balance
-      @leave.send_notifications(current_user)
+      @leave.send_notifications(current_user, 'create')
       flash[:notice] = "Leave placed successfully."   
       redirect_to admin_leaves_path
     else
+      flash[:alert] = "#{@leave.errors.present? ? @leave.errors.full_messages.to_sentence : 'Select at least one date'}" 
       render :new
     end
   end
@@ -39,8 +40,12 @@ class Admin::LeavesController < Admin::AuthenticationController
     @leave = Leave.find(params[:id])
     @leave.reason = params[:reason]
     @leave.status = params[:status]
+    if params[:status]
+      @leave.status_updated_by_id = current_user.id
+    end
     respond_to do |format|
       if @leave.save
+        @leave.send_notifications(current_user, 'update')
         flash[:notice] = "You have #{@leave.status} #{@leave.user.user_name}'s leave request."
         format.js {}
       else
@@ -49,9 +54,24 @@ class Admin::LeavesController < Admin::AuthenticationController
     end
   end
 
+  def cancel
+    @leave = Leave.find(params[:id])
+    @leave.status = 'cancelled'
+    @leave.status_updated_by_id = current_user.id
+    if @leave.save
+      @leave.send_notifications(current_user, 'cancel')
+      @leave.update_balance_for_cancelled_leave
+      flash[:notice] = "Your leave has been cancelled."
+      redirect_to leaves_path
+    else
+      flash[:alert] = "Unable to cancel please try after sometime."
+      redirect_to leaves_path
+    end
+  end
+
   def destroy
     @leave = Leave.find(params[:id]) 
-      @leave.destroy
+    @leave.destroy
     redirect_to admin_leaves_path
   end
 

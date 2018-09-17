@@ -45,23 +45,30 @@
               <%= @leave.status %>    
             </div>
           </div>
+          <% if @leave.status.to_s.downcase == 'unapproved' %>
+            <div class="row">
+              <div class="col-md-4">
+                <strong> Reason:</strong>
+              </div>
+              <div class="col-md-6"> 
+                <%= @leave.reason %>
+              </div>
+            </div>
+          <% end %>
           <div class="row">
             <div class="col-md-4">
               <% if is_employee? %>
                 <strong>Rejection Reason</strong>
               <%end%>
-              <% if is_manager?  %>
+              <% if is_manager? && @leave.status == 'pending'  %>
                 <strong>Action</strong>
               <% end %>
             </div>
             <div class="col-md-6"> 
-              <% if is_employee? %>
-                <%= @leave.reason %>
-              <% end %>
               <% if is_manager? %>
                 <input type="hidden" name="role" value="manager" id="user-role">
                   <% if current_user.id == @leave.user_id %>
-                    <%= @leave.reason %>
+                    <%#= @leave.reason %>
                   <%else%>
                     <% if @leave.status == 'pending' %>  
                       <%= link_to 'Approve', leave_path(@leave.id, status: 'approved'), method: 'PUT', :remote=> true %>
@@ -71,7 +78,6 @@
               <%end%>     
             </div>
           </div>
-       
       </div>
     </div>
   </div>

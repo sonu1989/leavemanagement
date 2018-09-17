@@ -57,10 +57,9 @@
             <div class="col-md-6"> 
               <% if is_admin? %>
                 <input type="hidden" name="role" value="manager" id="user-role">
-                <% if @leave.status == 'pending' %>
                   <%= link_to 'Approve', admin_leave_path(@leave.id, status: 'approved'), method: 'PUT', :remote=> true %>
                   <a href="javascript:void(0)" class="accept-reject-btn reject" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Unapproved</a> 
-                <%end%>
+                  <%= link_to "Cancel", cancel_admin_leave_path(@leave.id, status: 'cancelled'), method: 'PATCH', :remote=> true %>
               <%end%>  
 
             </div>

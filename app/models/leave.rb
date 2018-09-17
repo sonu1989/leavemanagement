@@ -9,32 +9,33 @@ class Leave < ActiveRecord::Base
 
   has_many :leave_days, dependent: :destroy
   belongs_to :placed_by, class_name: "User", foreign_key: :placed_by_id
+  belongs_to :status_updated_by, class_name: "User", foreign_key: :status_updated_by_id
 
   FULL_DAY = 'Full Day '
   
-  def send_notifications(current_user)
+  def send_notifications(current_user, action)
     @admin = User.find_by_role('admin')
     if current_user.is_employee?
-      UserMailer.with(leave: self, placed_by: current_user.user_name).user_leave_email.deliver_now
-      UserMailer.with(leave: self).manager_leave_email.deliver_now if self.user.manager.present?
-      UserMailer.with(leave: self,admin: @admin).admin_leave_email.deliver_now
+      UserMailer.with(leave: self, placed_by: current_user.user_name, action: action ).user_leave_email.deliver_now
+      UserMailer.with(leave: self, action: action ).manager_leave_email.deliver_now if self.user.manager.present?
+      UserMailer.with(leave: self,admin: @admin, action: action).admin_leave_email.deliver_now
     elsif current_user.is_admin?
       if self.user.role == 'manager'
-        UserMailer.with(leave: self, placed_by: current_user.user_name).user_leave_email.deliver_now      
-        UserMailer.with(leave: self,admin: @admin).admin_leave_email.deliver_now
+        UserMailer.with(leave: self, placed_by: current_user.user_name, action: action ).user_leave_email.deliver_now      
+        UserMailer.with(leave: self,admin: @admin, action: action).admin_leave_email.deliver_now
       else
-        UserMailer.with(leave: self, placed_by: current_user.user_name).user_leave_email.deliver_now
-        UserMailer.with(leave: self).manager_leave_email.deliver_now if self.user.manager.present?
-        UserMailer.with(leave: self,admin: @admin).admin_leave_email.deliver_now
+        UserMailer.with(leave: self, placed_by: current_user.user_name, action: action ).user_leave_email.deliver_now
+        UserMailer.with(leave: self, action: action).manager_leave_email.deliver_now if self.user.manager.present?
+        UserMailer.with(leave: self,admin: @admin, action: action).admin_leave_email.deliver_now
       end  
     else
       if current_user.id == self.user_id 
-        UserMailer.with(leave: self, placed_by: current_user.user_name).user_leave_email.deliver_now
-        UserMailer.with(leave: self,admin: @admin).admin_leave_email.deliver_now
+        UserMailer.with(leave: self, placed_by: current_user.user_name, action: action).user_leave_email.deliver_now
+        UserMailer.with(leave: self,admin: @admin, action: action).admin_leave_email.deliver_now
       else
-        UserMailer.with(leave: self, placed_by: current_user.user_name).user_leave_email.deliver_now
-        UserMailer.with(leave: self).manager_leave_email.deliver_now if self.user.manager.present?
-        UserMailer.with(leave: self,admin: @admin).admin_leave_email.deliver_now
+        UserMailer.with(leave: self, placed_by: current_user.user_name, action: action).user_leave_email.deliver_now
+        UserMailer.with(leave: self, action: action).manager_leave_email.deliver_now if self.user.manager.present?
+        UserMailer.with(leave: self,admin: @admin, action: action).admin_leave_email.deliver_now
       end   
     end    
   end

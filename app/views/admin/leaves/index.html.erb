@@ -26,6 +26,7 @@
               <th>Placed By</th>
               <th>Description</th>
               <th>Status</th>
+              <th>Status Updated By</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -34,11 +35,12 @@
               <tr>
                 <td><%= leave.user.user_name  rescue '' %></td>
                 <td><%= leave.user.employee_id rescue ''%></td>
-                <td><%= leave.start_date.strftime("%d-%m-%Y") rescue ''%></td>
-                <td><%= leave.end_date.strftime("%d-%m-%Y") rescue ''%></td>
+                <td><%= leave.start_date.strftime("%d-%m-%Y") rescue '' %></td>
+                <td><%= leave.end_date.strftime("%d-%m-%Y") rescue '' %></td>
                 <td><%= leave.placed_by.user_name rescue '' %></td>
                 <td><%= truncate_description(leave.description) %></td>
                 <td><%= leave.status %></td>
+                <td><%= leave.status_updated_by.user_name rescue '' %>
                 <td><%= link_to admin_leave_path(leave) do %>
                   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                 <% end %> |
