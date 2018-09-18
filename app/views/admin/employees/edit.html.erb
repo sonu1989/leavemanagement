@@ -1,6 +1,6 @@
  <h3>Edit Employee</h3>
  <hr>
- <%= simple_form_for @employee,url: admin_employee_path do |f| %>
+ <%= simple_form_for @employee, url: admin_employee_path do |f| %>
 
  <%= render partial: 'form', :locals => {:f => f} %>
  <%end%>

@@ -1,5 +1,20 @@
 <div class="col-md-10">
-  <%= f.input :image, :input_html => {:maxlength => 15, :size => 40}%>
+  <% if action_name.eql?("edit") %>
+    <div class="row">
+      <div class="col-md-6">
+        <% if @employee.image.present? %>
+          <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
+        <% else %>
+          <%= image_tag 'user_image.png', class: 'img-circular' %><br />
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= f.input :image, :value => @employee.image_url %>
+      </div>
+    </div>
+  <% else %>
+    <%= f.input :image, :value => @employee.image_url %>
+  <% end %>
   <div class="row">
     <div class="col-md-6">
       <%= f.input :first_name %>
@@ -24,7 +39,7 @@
     </div>
     <div class="col-md-6">
       <label>Joining date</label>
-      <input type="text" name="user[joining_date]" id="holiday_date" autocomplete="off" class="form-control string optional">
+      <input type="text" name="user[joining_date]" id="holiday_date" autocomplete="off" class="form-control string optional" value='<%= @employee.joining_date %>'>
     </div>
   </div>   
   <div class="row">
