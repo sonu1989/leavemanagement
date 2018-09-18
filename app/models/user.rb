@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   
   auto_increment :employee_id
+  
+  mount_uploader :image, ImageUploader
 
   belongs_to :manager, class_name: "User"
   has_many :employees, class_name: "User", foreign_key: :manager_id

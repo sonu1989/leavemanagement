@@ -55,7 +55,7 @@ class Admin::EmployeesController < Admin::AuthenticationController
 
   private
     def user_params
-     params.require(:user).permit(:first_name, :last_name, :mobile,:role ,:email,:password,:manager_id, :joining_date)
+     params.require(:user).permit(:first_name, :last_name, :mobile,:role ,:email,:password,:manager_id, :joining_date, :image)
     end
     
 end

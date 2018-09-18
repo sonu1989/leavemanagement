@@ -1,13 +1,40 @@
-<div class="col-md-8">
-  <%= f.input :first_name %>
-  <%= f.input :last_name %> 
-  <%= f.input :mobile %>
-  <% if f.object.new_record? %>
-    <%= f.input :password %>
-  <%end%>     
-  <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']] %>
-  <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first %> 
-  <%= f.input :email %> 
-  <%= f.input :joining_date, as: :date, html5: true %>
+<div class="col-md-10">
+  <%= f.input :image, :input_html => {:maxlength => 15, :size => 40}%>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :first_name %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :last_name %>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :email %>
+    </div>
+    <div class="col-md-6">
+      <% if f.object.new_record? %>
+        <%= f.input :password %>
+      <%end%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :mobile %>
+    </div>
+    <div class="col-md-6">
+      <label>Joining date</label>
+      <input type="text" name="user[joining_date]" id="holiday_date" autocomplete="off" class="form-control string optional">
+    </div>
+  </div>   
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']] %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first %> 
+    </div>
+  </div> 
+  <br>
   <%= f.submit f.object.id.present? ? 'Update Employee' : 'Add Employee' , class: 'btn btn-info' %>
 </div>

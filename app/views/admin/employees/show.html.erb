@@ -3,6 +3,11 @@
   <div class="panel panel-default">
     <div class="panel-heading">Employee Detail</div>
     <div class="panel-body">
+      <% if @employee.image.present? %>
+        <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
+      <% else %>
+        <%= image_tag 'user_image.png', class: 'img-circular' %><br />
+      <% end %>
       <div class="row">
       <div class="col-md-4">
         <strong>Employee ID :</strong>
