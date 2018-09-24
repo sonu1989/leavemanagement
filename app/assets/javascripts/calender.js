@@ -42,7 +42,7 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-  $('a').on('click', function(e){
+  $('a.tm-apply-leave-btn').on('click', function(e){
     url =  $(this).attr('href')
     if(url.includes('/leaves/new?')){
       window.location.url

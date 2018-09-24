@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :employees, class_name: "User", foreign_key: :manager_id
   has_many :leaves, dependent: :destroy
   has_many :balances
-  validates_presence_of :first_name, :last_name, :mobile,:role
+  validates_presence_of :first_name, :last_name, :mobile,:role, :joining_date
   validates :mobile, length: { maximum: 10, minimum: 10 }
 
   after_create :set_employee_id
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     month = Time.now.month
     number_of_day = ((month % 3) == 0 ? 2 : 1)
     number_of_day = (number_of_day / 2.0) unless (self.joining_date.present? && self.joining_date.to_s.split("-")[2].to_i) < 15
-    self.balances.create(main_balance: number_of_day, balance_added: number_of_day )
+    self.balances.create(main_balance: number_of_day, balance_added: number_of_day )   
   end
 
   def set_employee_id

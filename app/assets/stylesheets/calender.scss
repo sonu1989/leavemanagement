@@ -1,34 +1,39 @@
-table tr td.wday-0{
+.simple-calendar table tr td.wday-0{
   background: red !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
 }
-table tr td.selected{
+.simple-calendar table tr td.selected{
   background: green !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
 }
-table tr td.selected a{
+.simple-calendar table tr td.selected a{
   color: #fff !important;
 }
-table tr td.taken{
+.simple-calendar table tr td.taken{
   background: gray !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff; 
 }
-table tr td.holiday{
+.simple-calendar table tr td.holiday{
   background: red !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
 }
-table tr td.saturday-off{
+.simple-calendar table tr td.saturday-off{
   background: red !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff; 
 }
-table tr td.orange{
+.simple-calendar table tr td.orange{
   background: orange !important;
   border-left: 1px solid #fff;
   border-right: 1px solid #fff; 
 }
-
+.simple-calendar table tr td span{
+  color: #000;
+}
+.simple-calendar table tr td a{
+  color: #337ab7;
+}
