@@ -5,8 +5,10 @@
 <div class="x_content">
   <%= simple_form_for(@employee,url: admin_employees_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
       <%= render partial: 'form', :locals => {:f => f} %>
-      
+      <div class="col-md-6 form-group">
+      </div>  
+      <div class="col-md-6 form-group text-right">
+        <%=f.submit "Submit", class: "btn btn-primary" %>
+      </div>
   <%end%>
 </div>
-
-
