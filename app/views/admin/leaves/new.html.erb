@@ -5,10 +5,11 @@
     <%= simple_form_for @leave, url: admin_leaves_path do |f| %>     
       <div class="col-md-9">
         <label>Select Employee</label>
-        <%= f.input :user_id, label: false ,collection: employee_options, label_method: :second, value_method: :first %>
+        <%= f.input :user_id, label: false ,collection: employee_options, label_method: :second, value_method: :first, selected: employee_options.first %>
         <% @taken_leave_days = leave_already_taken_day %>
         <% @alternate_saturdays = alternate_saturday %>
-        <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last %>
+
+        <%= f.collection_radio_buttons :leave_type, leave_type_options, :first, :last, class: 'flat' %>
         <p style="display: none;" class='leave_type error'>Please Select Leave Type</p>
 
         <%= month_calendar do |date| %>
@@ -28,6 +29,7 @@
           <% end %>
         <%end%>
         <%= f.input :description %><br>
+         <p class="error description_error" style="display: none;">Description can't blank</p>
         <%= f.submit 'New Leaves', class: 'btn btn-info', id: 'save_leave' %>
       </div>  
     <% end %>

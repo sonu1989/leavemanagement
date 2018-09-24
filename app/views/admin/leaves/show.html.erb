@@ -1,68 +1,68 @@
-<div class="row">
-  <h3>Leave Detail</h3>
-  <hr>
-  <div class="">
-    <div class="col-md-8">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="row">
+<div class="x_title">
+  <h2>Leave Detail</h2>
+  <div class="clearfix"></div>
+</div> 
+<div style="margin-left: 290px">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
           <div class="col-md-4">
             <strong>Employee Name :</strong>
           </div>
           <div class="col-md-6"> 
             <%= @leave.user.user_name %>    
           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Start Date :</strong>
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <strong> Start Date :</strong>
-            </div>
-            <div class="col-md-6"> 
-              <%= @leave.start_date %>    
-            </div>
+          <div class="col-md-6"> 
+            <%= @leave.start_date %>    
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <strong> End Date :</strong>
-            </div>
-            <div class="col-md-6"> 
-              <%= @leave.end_date %>    
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> End Date :</strong>
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <strong> Description :</strong>
-            </div>
-            <div class="col-md-6"> 
-              <%= @leave.description %>    
-            </div>
+          <div class="col-md-6"> 
+            <%= @leave.end_date %>    
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <strong> Status :</strong>
-            </div>
-            <div class="col-md-6"> 
-              <%= @leave.status %>    
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Description :</strong>
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <% if is_employee? %>
-                <strong>Rejection Reason</strong>
-              <%end%>
-              <% if  is_admin? %>
-                <strong>Action</strong>
-              <% end %>
-            </div>
-            <div class="col-md-6"> 
-              <% if is_admin? %>
-                <input type="hidden" name="role" value="manager" id="user-role">
-                  <%= link_to 'Approve', admin_leave_path(@leave.id, status: 'approved'), method: 'PUT', :remote=> true %>
-                  <a href="javascript:void(0)" class="accept-reject-btn reject" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Unapproved</a> 
-                  <%= link_to "Cancel", cancel_admin_leave_path(@leave.id, status: 'cancelled'), method: 'PATCH', :remote=> true, data: {confirm: 'Are you sure?'} %>
-              <%end%>  
-
-            </div>
+          <div class="col-md-6"> 
+            <%= @leave.description %>    
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Status :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @leave.status %>    
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <% if is_employee? %>
+              <strong>Rejection Reason</strong>
+            <%end%>
+            <% if  is_admin? %>
+              <strong>Action</strong>
+            <% end %>
+          </div>
+          <div class="col-md-6"> 
+            <% if is_admin? %>
+              <input type="hidden" name="role" value="manager" id="user-role">
+                <%= link_to 'Approve', admin_leave_path(@leave.id, status: 'approved'), method: 'PUT', :remote=> true, class: 'link-underline' %>
+                <a href="javascript:void(0)" class="accept-reject-btn reject link-underline" leave-id="<%= @leave.id %>" status="<%= @leave.status %>" >Unapproved</a> 
+                <%= link_to "Cancel", cancel_admin_leave_path(@leave.id, status: 'cancelled'), method: 'PATCH', :remote=> true, data: {confirm: 'Are you sure?'}, class: 'link-underline' %>
+            <%end%>  
+          </div>
         </div>
       </div>
     </div>

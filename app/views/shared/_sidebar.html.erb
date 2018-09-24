@@ -1,33 +1,101 @@
-<nav class="d-none d-md-block bg-dark sidebar">
-  <div class="sidebar-sticky">
-    <ul class="nav flex-column">
-      <% if current_user && current_user.admin? %>
-        <li class="nav-item">
-          <%= link_to 'Dashboard', admin_dashboard_index_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Employees', admin_employees_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Leaves', admin_leaves_path, class: 'nav-link' %>
-        </li>
-         <li class="nav-item">
-          <%= link_to 'Holidays', admin_holidays_path, class: 'nav-link' %>
-        </li>
-      <% elsif current_user && current_user.employee? %>
-        <li class="nav-item">
-          <li><%= link_to "View Leaves", leaves_path, class: 'nav-link', method: :get %></li>
-          <li><%= link_to "Apply Leave", new_leave_path, class: 'nav-link' , method: :get %></li>
-          <li><%= link_to "Apply Leave For TM",new_leave_path(:team_member =>true), class: 'nav-link' , method: :get %></li>
-        </li>
-      <% elsif current_user && current_user.manager? %> 
-        <li class="nav-item">
-          <li><%= link_to "View Leaves", leaves_path, class: 'nav-link' %></li>
-          <li><%= link_to "Apply Leave", new_leave_path, class: 'nav-link' %></li>
-          <li><%= link_to "Apply Leave For TM",new_leave_path(:team_member =>true), class: 'nav-link' %> 
-          </li>  
-        </li> 
+<div class="col-md-3 left_col">
+  <div class="left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+      <%= link_to root_path, class: "site_title" do %>
+        <%= image_tag('logo.png', height: 40)%>
       <% end %>
-    </ul>
+      <!-- <a href="" class="site_title"><i class="fa fa-paw"></i> <span>Witmates</span></a> -->
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!-- menu profile quick info -->
+    <div class="profile clearfix">
+      <div class="profile_pic">
+        <% if current_user.image.present? %>
+          <%= image_tag( current_user.image_url.to_s, class: "img-circle profile_img", alt: "...") %>
+        <% else %>
+          <%= image_tag( 'user_image.png', class: "img-circle profile_img", alt: "...") %>
+        <% end %>
+      </div>
+      <div class="profile_info">
+        <span>Welcome,</span>
+        <h2><%= current_user.user_name %></h2>
+      </div>
+    </div>
+    <!-- /menu profile quick info -->
+
+    <br />
+
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+      <div class="menu_section">
+        <ul class="nav side-menu">
+          <% if current_user && current_user.admin? %>
+            <li><%= link_to admin_dashboard_index_path do %>
+                <i class="fa fa-home"></i>Dashboard
+                <% end %>
+            </li>
+            <li>
+              <%= link_to admin_leaves_path do %>
+                <i class="fa fa-tasks" aria-hidden="true"></i> Leaves
+              <% end %>
+            </li>
+            <li><%= link_to admin_holidays_path do %>
+                <i class="fa fa-calendar"></i>Holidays
+                <% end %>
+            </li>
+            <li><%= link_to admin_employees_path do %>
+                <i class="fa fa-group"></i>Employees
+               <% end %>
+            </li>
+            
+          <% elsif current_user && current_user.employee? %>
+            <li><%= link_to root_path do %>
+                <i class="fa fa-home"></i>Home
+                <% end %>
+            </li>
+            <li><%= link_to new_leave_path, method: :get do %>
+                <i class="fa fa-calendar"></i>Apply Leave
+                <% end %>
+            </li>
+             <li><%= link_to new_leave_path(:team_member =>true), method: :get do %>
+                <i class="fa fa-calendar"></i>Apply Leave for TM
+                <% end %>
+            </li>
+            <li><%= link_to leaves_path, method: :get do %>
+                <i class="fa fa-eye"></i>View leaves
+                <% end %>
+            </li>
+          <% elsif current_user && current_user.manager? %>
+            <li><%= link_to root_path do %>
+                <i class="fa fa-home"></i>Home
+                <% end %>
+            </li>
+            <li><%= link_to leaves_path, method: :get do %>
+                <i class="fa fa-eye"></i>View leaves
+                <% end %>
+            </li>
+            <li><%= link_to new_leave_path, method: :get do %>
+                <i class="fa fa-calendar"></i>Apply Leave
+                <% end %>
+            </li>
+             <li><%= link_to new_leave_path(:team_member =>true), method: :get, class: "tm-apply-leave-btn" do %>
+                <i class="fa fa-calendar"></i>Apply Leave for TM
+                <% end %>
+            </li>
+            <% end %> 
+        </ul>
+      </div>
+    </div>
+    <!-- /sidebar menu -->
+
+    <!-- /menu footer buttons -->
+    <div class="sidebar-footer hidden-small">
+      <a href="/users/edit" data-toggle="tooltip" data-placement="top" title="Settings">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      </a>
+    </div>
+    <!-- /menu footer buttons -->
   </div>
-</nav>
+</div>

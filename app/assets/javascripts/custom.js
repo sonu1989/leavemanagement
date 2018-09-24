@@ -2,6 +2,10 @@ $(document).on('click', '.accept-reject-btn', function(){
   $('#reject-leave-model').modal('show');
 })
 
+$(document).on('click', '#menu_toggle', function(){
+  $('body').toggleClass('nav-md nav-sm')
+});
+
 $(document).on('click', "#reject-save-btn", function(e){
   var reason = $('.reason').val();
   var id = $('.accept-reject-btn').attr('leave-id');
@@ -40,10 +44,17 @@ $(document).on('click', "#reject-save-btn", function(e){
   }
 })
 $(document).ready(function(){
-  $('#holiday_date').datepicker({format: 'dd-mm-yyyy'});
+  $('.holiday_date').datepicker({format: 'dd-mm-yyyy'});
 
-  $('#holiday_date').on('changeDate', function(ev){
+  $('.holiday_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
-});
+  });
+
+  $('#user_joining_date').datepicker({format: 'dd-mm-yyyy'});
+
+  $('#user_joining_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+  });
 
 });
+

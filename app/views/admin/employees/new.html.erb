@@ -1,15 +1,12 @@
-<div class="row">
-  <div class="">
-    <div class="col-md-12">
-      <%= simple_form_for @employee,url: admin_employees_path do |f| %>
-        <div class="col-md-8">
-          <h3>New Employee</h3>
-          <hr>
-          <%= render partial: 'form', :locals => {:f => f} %>
-        </div>
-        <div class="col-md-4"></div>
-      <%end%>
-    </div>
-  </div>
+ <div class="x_title">
+  <h2>New Employee</h2>
+  <div class="clearfix"></div>
 </div>
- 
+<div class="x_content">
+  <%= simple_form_for(@employee,url: admin_employees_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
+      <%= render partial: 'form', :locals => {:f => f} %>
+      
+  <%end%>
+</div>
+
+

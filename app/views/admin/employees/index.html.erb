@@ -1,69 +1,68 @@
-<div class="row">
-  <h3>Employees</h3>
-  <hr>
-  <div class="">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="">
-          <%= form_tag(admin_employees_path, method: 'get') do %>
-            <div class="col-md-6">
-              <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Employee ID or name') %>
-            </div>
-            <%= submit_tag("Search", name: nil, class: 'btn btn-info') %>
-          <% end %>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <%=link_to "CSV Report with Leave Balance", admin_employees_path(format: 'csv', employee_report: true),class: "btn btn-info pull-right" %>
-      </div>
-      <div class="col-md-4">
-        <%=link_to "New Employee",new_admin_employee_path, method: 'get', class: "btn btn-info pull-right" %>
+<div class="x_title">
+  <h2>Employees</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="">
+        <%= form_tag(admin_employees_path, method: 'get') do %>
+          <div class="col-md-6">
+            <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Employee ID or name') %>
+          </div>
+          <%= submit_tag("Search", name: nil, class: 'btn btn-info') %>
+        <% end %>
       </div>
     </div>
-    
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th>Employee ID</th>
-          <th>Joining Date</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Mobile</th>
-          <th>Role</th>
-          <th>Email</th>
-          <th>Manager</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @employees.each do |employee|%>
-          <tr>
-            <td><%= employee.employee_id %></td>
-            <td><%= employee.joining_date %></td>
-            <td><%= employee.first_name %></td>
-            <td><%= employee.last_name %></td>
-            <td><%= employee.mobile %></td>
-            <td><%= employee.role %></td>
-            <td><%= employee.email %></td>
-            <td><%= employee.manager.first_name rescue ''%></td>
-            <td>
-              <%= link_to admin_employee_path(employee) do %>
-                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-              <% end %> |
-              <%= link_to edit_admin_employee_path(employee), method: 'get' do %>
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-              <% end %> | 
-              <%= link_to admin_employee_path(employee),data: {:confirm => 'Are you sure?'}, :method => :delete do %>
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-              <% end %>
-             </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= will_paginate @employees,renderer: BootstrapPagination::Rails%>
+    <div class="col-md-4">
+      <%=link_to "CSV Report with Leave Balance", admin_employees_path(format: 'csv', employee_report: true),class: "btn btn-info pull-right" %>
+    </div>
+    <div class="col-md-4">
+      <%=link_to "New Employee",new_admin_employee_path, method: 'get', class: "btn btn-info pull-right" %>
+    </div>
   </div>
+  
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Employee ID</th>
+        <th>Joining Date</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Mobile</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Manager</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |employee|%>
+        <tr>
+          <td><%= employee.employee_id %></td>
+          <td><%= employee.joining_date %></td>
+          <td><%= employee.first_name %></td>
+          <td><%= employee.last_name %></td>
+          <td><%= employee.mobile %></td>
+          <td><%= employee.role %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.manager.first_name rescue ''%></td>
+          <td>
+            <%= link_to admin_employee_path(employee) do %>
+              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            <% end %> |
+            <%= link_to edit_admin_employee_path(employee), method: 'get' do %>
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <% end %> | 
+            <%= link_to admin_employee_path(employee),data: {:confirm => 'Are you sure?'}, :method => :delete do %>
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <% end %>
+           </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @employees,renderer: BootstrapPagination::Rails%>
 </div>
-</div>
-</div>
+
+

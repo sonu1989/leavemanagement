@@ -1,55 +1,59 @@
-<div class="col-md-10">
-  <% if action_name.eql?("edit") %>
-    <div class="row">
-      <div class="col-md-6">
-        <% if @employee.image.present? %>
-          <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
-        <% else %>
-          <%= image_tag 'user_image.png', class: 'img-circular' %><br />
-        <% end %>
-      </div>
-      <div class="col-md-6">
-        <%= f.input :image, :value => @employee.image_url %>
-      </div>
-    </div>
-  <% else %>
-    <%= f.input :image, :value => @employee.image_url %>
-  <% end %>
+<% if action_name.eql?("edit") %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :first_name %>
+      <% if @employee.image.present? %>
+        <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
+      <% else %>
+        <%= image_tag 'user_image.png', class: 'img-circular' %><br />
+      <% end %>
     </div>
     <div class="col-md-6">
-      <%= f.input :last_name %>
-    </div>
-  </div> 
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :email %>
-    </div>
-    <div class="col-md-6">
-      <% if f.object.new_record? %>
-        <%= f.input :password %>
-      <%end%>
+      <%= f.input :image, label: false %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :mobile %>
-    </div>
-    <div class="col-md-6">
-      <label>Joining date</label>
-      <input type="text" name="user[joining_date]" id="holiday_date" autocomplete="off" class="form-control string optional" value='<%= @employee.joining_date %>'>
-    </div>
-  </div>   
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']] %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first %> 
-    </div>
-  </div> 
-  <br>
-  <%= f.submit f.object.id.present? ? 'Update Employee' : 'Add Employee' , class: 'btn btn-info' %>
+<% else %>
+  <div class="img-padding">
+    <%= f.input :image, label: false %>
+  </div>
+<% end %>
+<br />
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :first_name, class: 'form-control has-feedback-right', placeholder: 'First Name', label: false %>
+  <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
 </div>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :last_name, class: 'form-control has-feedback-right', placeholder: 'Last Name', label: false %>
+  <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :email, class: 'form-control has-feedback-right', placeholder: 'Email', label: false %>
+  <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+</div>
+<% if f.object.new_record? %>
+  <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+    <%= f.input :password, class: 'form-control has-feedback-right', placeholder: 'Password', label: false %>
+    <span class="fa fa-lock form-control-feedback right" aria-hidden="true"></span>
+  </div>
+<% end %>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :mobile, class: 'form-control has-feedback-right', placeholder: 'Mobile no', label: false %>
+  <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :role, collection: [['Admin', 'admin'], ['Employee', 'employee'],['Manager','manager']], label: false, :prompt=>"select role" %>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :manager_id,collection: assign_managers, label_method: :second, value_method: :first, label: false, :prompt=>"select manager"  %> 
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+  <input type="text" name="user[joining_date]" id="user_joining_date" autocomplete="off" class="form-control string optional" placeholder="Joining Date" value='<%= @employee.joining_date %>'>
+  <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+  <% if @employee.errors.present? && @employee.errors[:joining_date].present? %>
+    <div class="invalid-feedback">Joining date can't be blank</div>
+  <% end %>
+</div>
+<% if action_name.eql?("new") %>
+  <%=f.submit "Submit", class: "btn btn-primary", style:"margin-left: -74px;"%>
+<% else %>
+  <%=f.submit "Update", class: "btn btn-primary", style:"margin-left: 9px;"%>
+<% end %>

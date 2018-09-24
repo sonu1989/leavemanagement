@@ -1,6 +1,8 @@
+<div class="x_title">
+  <h2>Leaves</h2>
+  <div class="clearfix"></div>
+</div>
 <div class="row">
-  <h3>Leaves</h3>
-  <hr>
   <div class="">
     <div class="col-md-12">     
         <div class="row">
@@ -13,10 +15,10 @@
               <% end %>
           </div>
           <div class="col-md-6">
-            <%= link_to "Apply Leave for Team Member", new_admin_leave_path, class: 'pull-right' %>
+            <%= link_to "Apply Leave for Team Member", new_admin_leave_path, class: 'pull-right tm-apply-leave-btn link-underline' %>
           </div>
         </div>
-        <table class="table table-striped">
+        <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
           <thead class="thead-dark">
             <tr>
               <th>Emp Name</th>
@@ -55,7 +57,9 @@
     </div>
   </div> 
 </div>
-<%= will_paginate @leaves, renderer: BootstrapPagination::Rails %>
+<div class="pull-right">
+  <%= will_paginate @leaves, renderer: BootstrapPagination::Rails %>
+</div>
 
 
 
