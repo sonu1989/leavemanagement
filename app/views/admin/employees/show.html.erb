@@ -1,71 +1,70 @@
-
-  <div class="col-md-9">
-  <div style="margin-left: 290px">
-  <div class="panel panel-default">
-    <div class="panel-heading">Employee Detail</div>
-    <div class="panel-body">
-      <% if @employee.image.present? %>
-        <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
-      <% else %>
-        <%= image_tag 'user_image.png', class: 'img-circular' %><br />
-      <% end %>
-      <div class="row">
-      <div class="col-md-4">
-        <strong>Employee ID :</strong>
-      </div>
-      <div class="col-md-6"> 
-        <%= @employee.employee_id %>    
-      </div>
-      </div>
-      <div class="row">
+<div class="col-md-9">
+  <div class="center-panel">
+    <div class="panel panel-default">
+      <div class="panel-heading">Employee Detail</div>
+      <div class="panel-body">
+        <% if @employee.image.present? %>
+          <%= image_tag(@employee.image_url.to_s, class: 'img-circular') %><br />
+        <% else %>
+          <%= image_tag 'user_image.png', class: 'img-circular' %><br />
+        <% end %>
+        <div class="row">
         <div class="col-md-4">
-          <strong> First Name :</strong>
+          <strong>Employee ID :</strong>
         </div>
         <div class="col-md-6"> 
-          <%= @employee.user_name %>    
+          <%= @employee.employee_id %>    
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong> Last Name :</strong>
         </div>
-        <div class="col-md-6"> 
-          <%= @employee.last_name %>    
+        <div class="row">
+          <div class="col-md-4">
+            <strong> First Name :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.user_name %>    
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong> Mobile :</strong>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Last Name :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.last_name %>    
+          </div>
         </div>
-        <div class="col-md-6"> 
-          <%= @employee.mobile %>    
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Mobile :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.mobile %>    
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong> Role :</strong>
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Role :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.role %>    
+          </div>
         </div>
-        <div class="col-md-6"> 
-          <%= @employee.role %>    
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Email :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.email %>    
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong> Email :</strong>
-        </div>
-        <div class="col-md-6"> 
-          <%= @employee.email %>    
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <strong> Manager :</strong>
-        </div>
-        <div class="col-md-6"> 
-          <%= @employee.manager.first_name rescue ''%>    
+        <div class="row">
+          <div class="col-md-4">
+            <strong> Manager :</strong>
+          </div>
+          <div class="col-md-6"> 
+            <%= @employee.manager.first_name rescue ''%>    
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>

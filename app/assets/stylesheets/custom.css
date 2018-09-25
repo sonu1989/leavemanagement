@@ -68,6 +68,12 @@
     position: fixed;
 }
 
+.center-panel{
+ margin-left: 290px;
+
+}
+
+
 html , body{
   
  height:100%;

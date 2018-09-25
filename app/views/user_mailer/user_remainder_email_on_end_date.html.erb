@@ -1,9 +1,5 @@
 <p>Hello <%=@leave.user.user_name %>,</p>
-<% if @action.eql?("create") %>
-  <p>Your leave has been applied successfully.</p>
-<% else %>
-  <p>Your leave status has been updated successfully. </p>
-<% end %>
+<p>Your leave is still pending.</p>
 <table class="table">
   <tbody>
     <%= render partial: 'leave_detail', locals: {leave: @leave} %>
@@ -12,7 +8,7 @@
         <td><%= @leave.status %> by</td>
         <td><%= @leave.status_updated_by.user_name %></td>
       </tr>
-      <% if @leave.status.eql?('Unapproved') %>
+      <% if @leave.status.eql?('Unapproved')%>
         <tr>
           <td>Reason</td>
           <td><%= @leave.reason %></td>
@@ -21,7 +17,7 @@
     <%end%>
   </tbody>
 </table>
-<p>Please click <%=link_to "here", leave_url(@leave) %> to view/cancel the leave request. </p>
+<p>Please click <%=link_to 'here', leave_url(@leave) %> to view/cancel the leave request. </p>
 <p>
   Thanks,<br>
   HR Team

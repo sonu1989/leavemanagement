@@ -37,6 +37,47 @@ class UserMailer < ApplicationMailer
     else
        mail(to: @admin.email ,subject: "Leave status for #{@leave.user.user_name} has been updated successfully.")
     end
+  end 
 
-  end  
+  def manager_remainder_email
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @user = @leave.user
+    @manager = @leave.user.manager
+    mail(to: @manager.email, subject: "Leave action notification")
+  end 
+
+  def admin_remainder_email
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @admin = params[:admin]
+    mail(to: @admin.email, subject: "Leave action notification")
+  end 
+
+  def user_remainder_email_on_end_date
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @user = @leave.user
+    mail(to: @user.email, subject: "Leave action notification")
+  end
+
+  def admin_remainder_email_on_end_date
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @admin = params[:admin]
+    mail(to: @admin.email, subject: "Leave action notification")
+  end
+
+  def manager_remainder_email_on_end_date
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @user = @leave.user
+    @manager = @leave.user.manager
+    mail(to: @manager.email, subject: "Leave action notification")
+  end
 end

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
 
   def user_name
-  	first_name + " " + last_name
+  	first_name.to_s.capitalize + " " + last_name.to_s.capitalize
   end
 
   def is_employee?

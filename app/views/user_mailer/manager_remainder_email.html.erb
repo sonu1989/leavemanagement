@@ -1,0 +1,12 @@
+<p>Hello <%= @manager.user_name %>,</p>
+<p><%= @leave.user.user_name %> is going on leave from <%= @leave.start_date %> to <%= @leave.end_date %> please take action</p>
+<table class="table">
+  <tbody>
+    <%= render partial: 'leave_detail', locals: {leave: @leave} %>
+  </tbody>
+</table>
+<p>Please click <%=link_to "here", admin_leave_url(@leave) %> to approve/unapprove/cancel the leave request. </p>
+<p>
+  Thanks,<br>
+  HR Team
+</p>
