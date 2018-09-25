@@ -64,6 +64,15 @@
   height: 45px;
 
 }
+.invalid-feedback{
+    position: fixed;
+}
+
+.center-panel{
+ margin-left: 290px;
+
+}
+
 
 html , body{
   

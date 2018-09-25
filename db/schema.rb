@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_130807) do
+ActiveRecord::Schema.define(version: 2018_09_25_125120) do
 
   create_table "balances", force: :cascade do |t|
     t.integer "user_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2018_09_17_130807) do
     t.text "days"
     t.integer "placed_by_id"
     t.integer "status_updated_by_id"
+    t.integer "sent_notification_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|

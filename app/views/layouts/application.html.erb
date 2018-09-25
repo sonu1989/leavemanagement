@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%favicon_link_tag 'favicon.ico'%>
+  <% favicon_link_tag 'favicon.ico'%>
 </head>
 
 <% if user_signed_in? %>
@@ -32,7 +32,7 @@
 <% else %>
   <body>
     <div class="container body">
-        <%= render partial: 'shared/top_navbar'%>
+        <%= render partial: 'layouts/header'%>
         <div class="right_col" style="min-height: 800px">
           <div class="<%= current_user.blank? ? 'col-md-12' : 'col-md-10' %>">
             <% flash.each do |key, value| %>
