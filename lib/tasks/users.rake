@@ -39,7 +39,7 @@ namespace :users do
     leaves = Leave.where("end_date == ? AND status == ?", Date.today, 'pending')
     leaves.each do |leave|
       UserMailer.with(leave: leave).manager_remainder_email_on_end_date.deliver_now if leave.user.manager.present?
-      UserMailer.with(leave: leave, admin: admin).admin_remainder_email_on_end_date.deliver_now 
+      UserMailer.with(leave: leave, admin: admin).admin_remainder_email_on_end_date.deliver_now
       UserMailer.with(leave: leave).user_remainder_email_on_end_date.deliver_now
       leave.sent_notification_count =  leave.sent_notification_count + 1
       leave.save
@@ -47,11 +47,15 @@ namespace :users do
   end
 
   task update_leave_unapproved: :environment do
+    admin = User.find_by_role('admin')
     leaves = Leave.where(status: 'pending', sent_notification_count: 1)
     leaves.each do |leave|
-      if leave.end_date < Date.today
+      if leave.end_date <= Date.today
         leave.update(status: 'Unapproved')
       end
+      UserMailer.with(leave: leave).user_remainder_email_on_end_date.deliver_now
+      UserMailer.with(leave: leave).manager_remainder_email_on_end_date.deliver_now if leave.user.manager.present?
+      UserMailer.with(leave: leave, admin: admin).admin_remainder_email_on_end_date.deliver_now 
     end
   end
 end

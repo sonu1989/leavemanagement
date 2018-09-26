@@ -61,7 +61,16 @@ class UserMailer < ApplicationMailer
     attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
     @leave = params[:leave]
     @user = @leave.user
-    mail(to: @user.email, subject: "Leave action notification")
+    mail(to: @user.email, subject: subject_heading(@leave))
+  end
+  
+  def manager_remainder_email_on_end_date
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @leave = params[:leave]
+    @user = @leave.user
+    @manager = @leave.user.manager
+    mail(to: @manager.email, subject: subject_heading(@leave))
   end
 
   def admin_remainder_email_on_end_date
@@ -69,15 +78,14 @@ class UserMailer < ApplicationMailer
     attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
     @leave = params[:leave]
     @admin = params[:admin]
-    mail(to: @admin.email, subject: "Leave action notification")
+    mail(to: @admin.email, subject: subject_heading(@leave))
   end
 
-  def manager_remainder_email_on_end_date
-    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
-    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
-    @leave = params[:leave]
-    @user = @leave.user
-    @manager = @leave.user.manager
-    mail(to: @manager.email, subject: "Leave action notification")
+  def subject_heading(leave)
+    if leave.status.to_s.downcase.eql?('unapproved')
+      'Leave has been unapproved.'  
+    else
+      'Leave action notification.'
+    end    
   end
 end

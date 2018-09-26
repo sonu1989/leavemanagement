@@ -1,5 +1,9 @@
 <p>Hello <%= @manager.user_name %>,</p>
-<p><%= @leave.user.user_name %> is going on leave from <%= @leave.start_date %> to <%= @leave.end_date %> please take action</p>
+<% if @leave.status.to_s.downcase.eql?('unapproved') %>
+  <p>Leave of <%= @leave.user.user_name %> from <%= @leave.start_date %> to <%= @leave.end_date %> has been unapproved.</p>
+<% else %>
+  <p><%= @leave.user.user_name %> is going on leave from <%= @leave.start_date %> to <%= @leave.end_date %> please take action</p>
+<% end %>
 <table class="table">
   <tbody>
     <%= render partial: 'leave_detail', locals: {leave: @leave} %>
