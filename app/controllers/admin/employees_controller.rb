@@ -3,7 +3,7 @@ class Admin::EmployeesController < Admin::AuthenticationController
   def index
     if params[:search].present?
       term = params[:search]
-      @employees = User.where.not(role: 'admin').where('first_name LIKE (?) or employee_id =?', "%#{term}%", term.to_i).paginate(:page => params[:page], :per_page => 5)
+      @employees = User.where.not(role: 'admin').where('email LIKE ? or employee_id =?', "%#{term}%", term.to_i).paginate(:page => params[:page], :per_page => 5)
     elsif params[:employee_report] == 'true'
       @employees = User.includes(:balances).where.not(role: 'admin').order('employee_id ASC')
     else
