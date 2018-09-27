@@ -2,14 +2,11 @@
   <h2> New Holidays</h2>
   <div class="clearfix"></div>
 </div>
-<div class="center-panel">
-<%= simple_form_for @holiday,url: admin_holidays_path do |f| %>
-  <div class="col-md-6">
-    <label>Select Occasion Date </label>
-    <input type="text" name="holiday[date]"  autocomplete="off" class="form-control string optional holiday_date">
-    <label>Description</label>
-    <%= f.input :occasion, label: false, as: :text %> 
-    <%= f.submit  class: 'btn btn-info' %>
-  </div>  
-<%end%>
+<div class="x_content">
+  <%= simple_form_for(@holiday,url: admin_holidays_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
+    <%= render partial: 'form', :locals => {:f => f} %>
+    <div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback text-right">
+      <%=f.submit "Create holiday", class: "btn btn-primary" %>
+    </div>
+  <%end%>
 </div>

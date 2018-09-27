@@ -1,0 +1,12 @@
+<div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback margin_bottom_20">
+  <input type="text" name="holiday[date]"  autocomplete="off" class="form-control has-feedback-left holiday_date" placeholder='Occasion date' value='<%= @holiday.date %>'>
+  <% if @holiday.errors.present? && @holiday.errors[:date].present? %>
+    <div class="invalid-feedback">date can't be blank</div>
+  <% end %>
+  <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+</div>
+<br>
+<div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :occasion, label: false, as: :text, placeholder: 'Occasion' %>
+  <span class="fa fa-pencil form-control-feedback right" aria-hidden="true"></span>
+</div>

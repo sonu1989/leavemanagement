@@ -27,6 +27,9 @@
 .holiday-list{
   margin-top: 15px;
 }
+.margin_bottom_20{
+    margin-bottom: 20px !important;
+}
 .link-underline{
   text-decoration: underline;
 }
@@ -73,6 +76,10 @@
 
 }
 
+.marquee_style{
+    font-size: 24px;
+    color: #f16051;
+}
 
 html , body{
   
@@ -2278,7 +2285,10 @@ legend {
     right: 13px
 }
 .form-control.has-feedback-left {
-    padding-left: 45px
+    padding-left: 45px;
+}
+.holiday_date{
+    padding-left: 10px !important;   
 }
 .form-control.has-feedback-right {
     padding-right: 45px
