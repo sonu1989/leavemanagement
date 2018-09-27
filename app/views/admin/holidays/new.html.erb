@@ -6,7 +6,7 @@
   <%= simple_form_for(@holiday,url: admin_holidays_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
     <%= render partial: 'form', :locals => {:f => f} %>
     <div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback text-right">
-      <%=f.submit "Create holiday", class: "btn btn-primary" %>
+      <%=f.submit "Create holiday", class: "btn btn-info" %>
     </div>
   <%end%>
 </div>

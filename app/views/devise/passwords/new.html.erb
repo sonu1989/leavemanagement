@@ -1,18 +1,21 @@
-<div class="col-md-6 col-sm-6 col-xs-6">
+<div class="col-md-4">
+</div>
+<div class="col-md-4 col-sm-6 col-xs-6 center-panel">
   <div class="x_panel">
     <div class="x_title">
       <h2>Forgot Your Password?</h2>
       <div class="clearfix"></div>
     </div>
-    <%= simple_form_for resource, url: password_path(resource_name), html: { method: :post } do |f| %>
-     
-      <div class="form-group has-feedback">
-        <%= f.input :email, class: 'form-control has-feedback-right', placeholder: 'Email', label: false %>
-        <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
-      </div>
-      <%= f.submit 'send me reset password instruction', class: 'btn btn-info' %> 
-      <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-info' %> 
-    <% end %>
+    <div class="x_content">
+      <%= simple_form_for resource, url: password_path(resource_name), html: { method: :post, class: 'form-horizontal form-label-left input_mask' } do |f| %>
+        <div class="form-group has-feedback">
+          <%= f.input :email, class: 'form-control has-feedback-right', placeholder: 'Email', label: false %>
+          <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+        </div>
+        <%= f.submit 'send me reset password instruction', class: 'btn btn-info' %> 
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-info' %> 
+      <% end %>
+    </div>
   </div>
 </div>
 

@@ -5,8 +5,8 @@
 <div class="x_content">
   <%= simple_form_for(@holiday,url: admin_holiday_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
     <%= render partial: 'form', :locals => {:f => f} %>
-    <div class="col-md-6 form-group text-right">
-      <%=f.submit "Update holiday", class: "btn btn-primary" %>
+     <div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback text-right">
+      <%=f.submit "Update", class: "btn btn-info" %>
     </div> 
   <%end%> 
 </div>
