@@ -1,0 +1,35 @@
+<div class="x_title">
+  <h2>Circular Detail</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="col-md-7">
+  <div class="panel panel-default">
+    <div class="panel-heading">Circular Detail</div>
+    <div class="panel-body panel_font_size">
+      <div class="row">
+      <div class="col-md-4">
+        <strong> Note :</strong>
+      </div>
+      <div class="col-md-6"> 
+        <%= @circular.note %>    
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <strong> Published date :</strong>
+        </div>
+        <div class="col-md-6"> 
+          <%= @circular.published_at %>    
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <strong> Status :</strong>
+        </div>
+        <div class="col-md-6"> 
+          <%= @circular.published %>    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

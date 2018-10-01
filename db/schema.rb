@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_125120) do
+ActiveRecord::Schema.define(version: 2018_09_28_065023) do
 
   create_table "balances", force: :cascade do |t|
     t.integer "user_id"
     t.decimal "main_balance"
     t.decimal "balance_added"
     t.decimal "balance_deducted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "circulars", force: :cascade do |t|
+    t.text "note"
+    t.date "published_at"
+    t.boolean "published", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

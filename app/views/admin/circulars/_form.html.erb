@@ -1,0 +1,16 @@
+<div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.input :note, label: false, as: :text, placeholder: 'Note' %>
+  <span class="fa fa-pencil form-control-feedback right" aria-hidden="true"></span>
+</div>
+<br>
+<div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback margin_bottom_20">
+  <input type="text" name="circular[published_at]"  autocomplete="off" class="form-control has-feedback-left holiday_date" placeholder='Published at' value='<%= @circular.published_at %>'>
+  <% if @circular.errors.present? && @circular.errors[:published_at].present? %>
+    <div class="invalid-feedback">Published date can't be blank</div>
+  <% end %>
+  <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+</div>
+<div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback">
+  <%= f.check_box :published, {}, "true", "false" %>
+  <label>Published</label>
+</div>

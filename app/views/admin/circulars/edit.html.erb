@@ -1,0 +1,12 @@
+<div class="x_title">
+  <h2>Edit circular</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <%= simple_form_for(@circular,url: admin_circular_path, html: {class: 'form-horizontal form-label-left input_mask'}) do |f| %>
+    <%= render partial: 'form', :locals => {:f => f} %>
+    <div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback text-right">
+      <%=f.submit "Update Circular", class: "btn btn-info" %>
+    </div>
+  <%end%>
+</div>

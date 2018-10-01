@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :employees
 
   namespace :admin do
+    resources :circulars do
+      patch :update_published, on: :member
+    end
     resources :dashboard, only: [:index]
     resources :holidays
     resources :employees

@@ -67,4 +67,8 @@ module ApplicationHelper
     end
     leave_days.join(' ,')
   end
+
+  def circular_note(circular)
+    ['Welcome to Witmates Technologies Pvt Ltd', circular.try(:note)].to_sentence
+  end
 end
