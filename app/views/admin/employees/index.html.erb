@@ -4,7 +4,7 @@
 </div>
 <div class="col-md-12">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="">
         <%= form_tag(admin_employees_path, method: 'get') do %>
           <div class="col-md-6">
@@ -14,10 +14,18 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-4">
-      <%=link_to "CSV Report with Leave Balance", admin_employees_path(format: 'csv', employee_report: true),class: "btn btn-info pull-right" %>
+    <div class="col-md-3">
+      <%= form_tag(generate_csv_admin_employees_path, method: 'get') do %>
+        <div class="col-md-6">
+          <%= select_tag "month", options_for_select(choose_month), class: 'form-control' %>
+        </div>
+        <div class="col-md-6">
+          <%= submit_tag("CSV Report with Leave Balance", data: { disable_with: false } ,class: 'btn btn-info')%>
+        </div>
+      <% end %>
+      <%#=link_to "CSV Report with Leave Balance", admin_employees_path(format: 'csv', employee_report: true),class: "btn btn-info pull-right" %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%=link_to "New Employee",new_admin_employee_path, method: 'get', class: "btn btn-info pull-right" %>
     </div>
   </div>
@@ -27,6 +35,7 @@
       <tr>
         <th>Employee ID</th>
         <th>Joining Date</th>
+        <th>Leave Balance</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Mobile</th>
@@ -41,6 +50,7 @@
         <tr>
           <td><%= employee.employee_id %></td>
           <td><%= employee.joining_date %></td>
+          <td><%= employee.leave_balance %></td>
           <td><%= employee.first_name %></td>
           <td><%= employee.last_name %></td>
           <td><%= employee.mobile %></td>

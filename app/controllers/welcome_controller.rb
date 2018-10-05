@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    @circular = Circular.find_circular
+    @circulars = Circular.active
   end
 end

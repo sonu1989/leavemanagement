@@ -4,14 +4,8 @@ class Admin::EmployeesController < Admin::AuthenticationController
     if params[:search].present?
       term = params[:search]
       @employees = User.where.not(role: 'admin').where('email LIKE ? or employee_id =? or first_name LIKE ?', "%#{term}%", term.to_i, "%#{term}%").paginate(:page => params[:page], :per_page => 5)
-    elsif params[:employee_report] == 'true'
-      @employees = User.includes(:balances).where.not(role: 'admin').order('employee_id ASC')
     else
       @employees = User.all_employees.order('employee_id ASC').paginate(:page => params[:page], :per_page => 10)
-    end
-    respond_to do |format|
-      format.html
-      format.csv { send_data @employees.to_csv, filename: "users.csv" }
     end
   end
 
@@ -52,6 +46,13 @@ class Admin::EmployeesController < Admin::AuthenticationController
     @employee.leaves.update_all(deleted: true)
     redirect_to admin_employees_path
   end
+
+  def generate_csv
+    @employees = User.includes(:balances).where.not(role: "admin").order('employee_id ASC')
+    respond_to do |format|
+      format.html { send_data @employees.to_csv(params[:month]), filename: "users.csv" }
+    end
+  end 
 
   private
     def user_params

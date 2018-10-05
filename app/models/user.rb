@@ -62,17 +62,16 @@ class User < ActiveRecord::Base
     self.employee_id = user.employee_id+1
   end
 
-  def self.to_csv
+  def self.to_csv(month)
     attributes = ['Employee Id', 'Name', 'Email', 'Leave Balance', 'Joining Date', 'Unapproved leaves']
-
     CSV.generate(headers: true) do |csv|
       csv << attributes
-
       all.each do |user|
-        employee = [user.employee_id,user.user_name,user.email,user.leave_balance, user.joining_date, user.unapproved_leaves]
+        balance = user.balances.order('created_at DESC').select{|balance| balance.created_at.month == month.to_i }.first
+        main_balance = balance.try(:main_balance)
+        employee = [user.employee_id,user.user_name,user.email, main_balance, user.joining_date, user.unapproved_leaves]
         csv << employee
       end
     end
   end
-
 end

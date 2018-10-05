@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::AuthenticationController
   before_action :authenticate_admin!
 
   def index
-    @circular = Circular.find_circular
+    @circulars = Circular.active
   end
 
   def edit
