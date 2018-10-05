@@ -31,7 +31,7 @@
               <td><%= truncate_description(leave.description) %></td>
               <td class="status"><%= leave.status %></td>
               <td><%= link_to "View", leave_path(leave) %></td>
-              <% if leave.status.eql?('pending') && leave.end_date > Date.today %>
+              <% if leave.status.eql?('pending') && leave.end_date.present? && leave.end_date > Date.today %>
                 <td><%= link_to "Cancel", cancel_leave_path(leave), method: 'patch', data: {confirm: "are you sure"} %></td>
               <% end %>
             </tr>
