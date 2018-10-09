@@ -19,15 +19,17 @@
           <% if date.sunday? %>
             <span class="day"><%= date.day %></span>
           <% elsif @alternate_saturdays.include?(date.strftime('%d/%m/%Y')) %>
-            <span class="day saturday-off" title="Saturday Off" ><%= date.day %></span>
+            <span class="day saturday-off" title="Saturday Off" ><%= date.day %></span>  
           <% elsif date.past? %>
-            <span class="past"><%= date.day %></span>
+            <% if current_user.is_admin? %>
+              <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
+            <% else %>
+              <span class="past"><%= date.day %></span>
+            <% end %>
           <% elsif holiday.present? %>
             <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
           <% elsif @taken_leave_days.present? && @taken_leave_days.include?(date.strftime('%d/%m/%Y')) %>
             <span class="day taken" title="Applied/Taken"><%= date.day %></span>
-          <% elsif current_user.is_admin? %>
-            <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
           <% else %>
             <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
           <% end %>
