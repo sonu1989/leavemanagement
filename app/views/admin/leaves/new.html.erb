@@ -26,6 +26,8 @@
             <span class="day holiday" title="<%= holiday.occasion %>"><%= date.day %></span>
           <% elsif @taken_leave_days.present? && @taken_leave_days.include?(date.strftime('%d/%m/%Y')) %>
             <span class="day taken" title="Applied/Taken"><%= date.day %></span>
+          <% elsif current_user.is_admin? %>
+            <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
           <% else %>
             <%= link_to date.day, 'javascript:void(0)', class: 'day', date: date  %>
           <% end %>
