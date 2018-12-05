@@ -16,6 +16,7 @@ namespace :users do
       users.each do |user|
         last_balance = user.balances.order('created_at DESC').first
         if last_balance.present?
+          last_balance.update(main_balance: 0) if last_balance.main_balance < 0
           main_balance = last_balance.main_balance + number_of_day
         else
           main_balance = number_of_day
