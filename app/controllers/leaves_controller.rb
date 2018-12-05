@@ -47,6 +47,7 @@ class LeavesController < ApplicationController
     end
     respond_to do |format|
       if @leave.save
+        @leave.update_balance_for_cancelled_leave if @leave.status.to_s.downcase == 'unapproved' 
         @leave.send_notifications(current_user, 'update')
         flash[:notice] = "You have #{@leave.status} #{@leave.user.user_name}'s leave request."
         format.js {}
