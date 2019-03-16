@@ -3,9 +3,9 @@ class Admin::LeavesController < Admin::AuthenticationController
 
   def index
     if params[:search].present?
-      @leaves = Leave.all.where('user_id =?',params[:search]).paginate(:page => params[:page], :per_page => 10)
+      @leaves = Leave.where('employee_id =?',params[:search].to_i).paginate(:page => params[:page], :per_page => 10)
     else  
-      @leaves = Leave.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
+      @leaves = Leave.order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
     end  
   end
     
