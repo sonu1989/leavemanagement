@@ -50,7 +50,7 @@ class Admin::EmployeesController < Admin::AuthenticationController
   def generate_csv
     @employees = User.includes(:balances).where.not(role: "admin").order('employee_id ASC')
     respond_to do |format|
-      format.html { send_data @employees.to_csv(params[:month]), filename: "Team Members Leave Report - #{Time.zone.now.strftime('%d/%m/%Y, %I:%M %p')}" }
+      format.html { send_data @employees.to_csv(params[:month]), filename: "Team Members Leave Report - #{Time.zone.now.strftime('%d/%m/%Y, %I:%M %p')}.csv" }
     end
   end 
 
