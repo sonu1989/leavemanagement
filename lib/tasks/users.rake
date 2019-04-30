@@ -30,8 +30,8 @@ namespace :users do
   end
    
   task one_day_before_send_email: :environment do
-    admin = User.find_by_role('admin')
-    leaves = Leave.where("start_date == ? AND status == ?", Date.tomorrow, 'pending')
+    admin = User.find_by_email('hr@witmates.com')
+    leaves = Leave.where(status: 'pending').where(start_date: Date.tomorrow)
     leaves.each do |leave|
       UserMailer.with(leave: leave).manager_remainder_email.deliver_now if leave.user.manager.present?
       UserMailer.with(leave: leave, admin: admin).admin_remainder_email.deliver_now 
@@ -39,8 +39,8 @@ namespace :users do
   end
 
   task on_end_date_send_mail: :environment do
-    admin = User.find_by_role('admin')
-    leaves = Leave.where("end_date == ? AND status == ?", Date.today, 'pending')
+    admin = User.find_by_email('hr@witmates.com')
+    leaves = Leave.where('end_date < ?', Date.today).where(status: 'pending')
     leaves.each do |leave|
       UserMailer.with(leave: leave).manager_remainder_email_on_end_date.deliver_now if leave.user.manager.present?
       UserMailer.with(leave: leave, admin: admin).admin_remainder_email_on_end_date.deliver_now
