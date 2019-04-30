@@ -9,15 +9,18 @@ namespace :users do
   end
 
   task add_leave_balance: :environment do  
-    if Time.now.day == 1
+    if Time.zone.now.day == 1
       users = User.all
       month = Time.now.month
       number_of_day = ((month % 3) == 0 ? 2 : 1)
       users.each do |user|
         last_balance = user.balances.order('created_at DESC').first
         if last_balance.present?
-          last_balance.update(main_balance: 0) if last_balance.main_balance < 0
-          main_balance = last_balance.main_balance + number_of_day
+          if last_balance.main_balance < 0
+            days = last_balance.main_balance + number_of_day
+            last_balance.update(main_balance: days)
+          end
+          main_balance = last_balance.reload.main_balance + number_of_day
         else
           main_balance = number_of_day
         end
