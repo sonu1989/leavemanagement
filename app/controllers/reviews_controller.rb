@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
 
   def create
     @review_request = ReviewRequest.find(params[:review_request_id])
-    @review =  Review.new(review_params)
+    @review =  Review.new(review_params.merge(created_at: @review_request.created_at))
     if @review.save
       @review_request.update_attributes(status: ReviewRequest.statuses[:complete])
       flash[:notice] = 'Feedback submitted successfully.'
