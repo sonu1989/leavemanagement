@@ -1,0 +1,7 @@
+<p>Hello <%= @manager.user_name %>,</p>
+<p>Please submit the feedback of <b><%= @employee.user_name %></b> for <%= @review_request.created_at.strftime('%B, %Y') %>. </p>
+<p>Please click <%=link_to "here", reviews_url %> to submit feedback. </p>
+<p>
+  Thanks,<br>
+  HR Team
+</p>

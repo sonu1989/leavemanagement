@@ -88,4 +88,21 @@ class UserMailer < ApplicationMailer
       'Leave action notification.'
     end    
   end
+
+  def send_review_requests_notification(review_request)
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @review_request = review_request
+    @employee = @review_request.employee
+    @manager = @review_request.reviewer
+    mail(to: @manager.email, subject: "Review request for #{@employee.user_name}")
+  end
+
+  def send_feedback_notification(review)
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @review = review
+    @employee = @review.employee
+    mail(to: @employee.email, subject: "Feedback received for #{@review.created_at.strftime('%B, %Y')}")
+  end
 end

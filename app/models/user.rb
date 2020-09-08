@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   has_many :employees, class_name: "User", foreign_key: :manager_id
   has_many :leaves, dependent: :destroy
   has_many :balances
+  has_many :reviews
+  has_many :review_requests, class_name: 'ReviewRequest', foreign_key: :reviewer_id
+
   validates_presence_of :first_name, :last_name, :mobile,:role, :joining_date
   validates :mobile, length: { maximum: 10, minimum: 10 }
 
@@ -20,6 +23,7 @@ class User < ActiveRecord::Base
   enum role: [:employee, :manager, :admin]
 
   default_scope {where(deleted: false)}
+  
   scope :all_employees,-> { where.not(role: "admin")}
   scope :managers,-> {where(role:"manager")}
   scope :admins,-> {where(role:"admin")}
@@ -44,6 +48,10 @@ class User < ActiveRecord::Base
   def leave_balance
     balance = self.balances.order('created_at DESC').first
     balance ? balance.main_balance.to_f : 0.0
+  end
+
+  def over_all_rating
+    self.reviews.where(created_at: (Time.zone.now.beginning_of_day)..((Time.zone.now - 12.months).end_of_day))
   end
   
   def unapproved_leaves

@@ -62,5 +62,15 @@ namespace :users do
       UserMailer.with(leave: leave, admin: admin).admin_remainder_email_on_end_date.deliver_now 
     end
   end
+
+  task send_review_requests: :environment do
+    date = Time.zone.now
+    if (Time.now.day == (date.end_of_month - 2.days).day)
+      User.employee.each do |employee|
+        ReviewRequest.create(user_id: employee.id, reviewer_id: employee.manager_id, status: ReviewRequest.statuses['pending'])
+      end
+    end
+  end
+
 end
 

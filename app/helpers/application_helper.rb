@@ -71,4 +71,9 @@ module ApplicationHelper
   def circular_note(circulars)
     (circulars rescue'').to_sentence
   end
+
+  def extract_rating_text(rating)
+    Review::RATINGS.to_a.select{|r| r[1].to_f == rating.to_f}.first&.first.to_s
+  end
+
 end

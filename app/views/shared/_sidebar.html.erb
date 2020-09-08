@@ -71,6 +71,10 @@
                 <i class="fa fa-eye"></i>View leaves
                 <% end %>
             </li>
+            <li><%= link_to reviews_path, method: :get do %>
+                <i class="fa fa-eye"></i>Reviews
+                <% end %>
+            </li>
           <% elsif current_user && current_user.manager? %>
             <li><%= link_to root_path do %>
                 <i class="fa fa-home"></i>Home
@@ -86,6 +90,10 @@
             </li>
              <li><%= link_to new_leave_path(:team_member =>true), method: :get, class: "tm-apply-leave-btn" do %>
                 <i class="fa fa-calendar"></i>Apply Leave for TM
+                <% end %>
+            </li>
+            <li><%= link_to reviews_path, method: :get do %>
+                <i class="fa fa-eye"></i>Reviews
                 <% end %>
             </li>
             <% end %> 

@@ -1,0 +1,71 @@
+<% if current_user.manager? %>
+  <div class="x_title">
+    <h2>Reviews Requests </h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @review_requests.blank? %>
+        <span>No pending review requests yet</span>
+      <% else %>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Team Member Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+          <tbody> 
+            <% @review_requests.each do |review_request| %>
+              <tr>
+                <td><%= review_request.employee.user_name %></td>
+                <td class="status"><%= review_request.status %></td>
+                <td><%= link_to "Submit Feedback", new_review_path(review_request_id: review_request.id) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div> 
+  <div class="col-md-3">
+  </div>
+<% else %>
+  <div class="x_title">
+    <h2>Reviews (Your last 12 months rating is : <span class="green-balance"><%= @over_all_ratings ? @over_all_ratings : 0 %></span>)</h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% if @reviews.blank? %>
+        <span>No Reviews yet</span>
+      <% else %>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Rating</th>
+              <th>Feedback</th>
+              <th>Submitted by</th>
+              <th>Month</th>
+              <th>Action</th>
+            </tr>
+          </thead> 
+          <tbody> 
+            <% @reviews.each do |review| %>
+              <tr>
+                <td><%= extract_rating_text(review.rating) %></td>
+                <td><%= truncate_description(review.feedback) %></td>
+                <td><%= review.reviewer.user_name rescue '' %></td>
+                <td><%= review.created_at.strftime("%B, %Y") %></td>
+                <td><%= link_to "View", review_path(review) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div> 
+  <div class="col-md-3">
+  </div>
+<% end %>

@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :leaves do
     patch :cancel, on: :member
   end
-  resources :employees
+  
+  resources :reviews
 
   namespace :admin do
     resources :circulars do

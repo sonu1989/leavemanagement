@@ -1,0 +1,43 @@
+<div class="x_title">
+  <h2>Review Detail </h2>
+  <div class="clearfix"></div>
+</div> 
+<div class="col-md-12 ">
+  <div class="panel panel-default">
+    <div class="panel-body panel_font_size">
+      <div class="row">
+      <div class="col-md-4">
+        <strong>Rating:</strong>
+      </div>
+      <div class="col-md-6"> 
+        <%= extract_rating_text(@review.rating) %>    
+      </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+          <strong> Comment :</strong>
+        </div>
+        <div class="col-md-6"> 
+          <%= @review.feedback %>    
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+          <strong> Submitted by :</strong>
+        </div>
+        <div class="col-md-6"> 
+          <%= @review.reviewer.user_name %>    
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <strong> Month :</strong>
+        </div>
+        <div class="col-md-6"> 
+          <%= @review.created_at.strftime('%B, %Y') %>    
+        </div>
+      </div>
+  </div>
+</div>

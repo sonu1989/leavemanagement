@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_065023) do
+ActiveRecord::Schema.define(version: 2020_09_08_103219) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "balances", force: :cascade do |t|
     t.integer "user_id"
@@ -60,6 +63,23 @@ ActiveRecord::Schema.define(version: 2018_09_28_065023) do
     t.integer "sent_notification_count", default: 0
   end
 
+  create_table "review_requests", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "reviewer_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "reviewer_id"
+    t.text "feedback"
+    t.decimal "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -76,7 +96,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_065023) do
     t.string "first_name"
     t.string "last_name"
     t.string "mobile"
-    t.integer "role"
+    t.integer "role", default: 0
     t.boolean "deleted", default: false
     t.integer "employee_id"
     t.integer "manager_id"

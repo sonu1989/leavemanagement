@@ -1,0 +1,7 @@
+<p>Hello <%= @employee.user_name %>,</p>
+<p>You have received monthly feedback for <b><%= @review.created_at.strftime("%B, %Y") %></b> </p>
+<p>Please click <%=link_to "here", reviews_url %> to see your all months feedback. </p>
+<p>
+  Thanks,<br>
+  HR Team
+</p>

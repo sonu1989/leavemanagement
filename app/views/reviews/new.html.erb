@@ -1,0 +1,27 @@
+<div class="x_title">
+  <h2>Submit Feedback of <b> <%= @review_request&.employee&.user_name %></b> for <%= @review_request.created_at.strftime('%B, %Y') %></h2>
+  <div class="clearfix"></div>
+</div>
+<div class="row">
+  <div class="">
+    <div class="col-md-12">
+      <%= simple_form_for @review, url: reviews_path do |f| %>
+        <%= f.input :reviewer_id, :as => :hidden, :input_html => { :value => @review_request.reviewer_id } %>
+        <%= f.input :user_id, :as => :hidden, :input_html => { :value => @review_request.user_id } %>
+        <%= hidden_field_tag 'review_request_id', @review_request.id %>
+        <div class="col-md-12">
+          <div class="col-md-6 form-group has-feedback">
+            <label>Rating</label>
+            <%= f.input :rating, collection: Review::RATINGS.to_a , label: false, :prompt=>"Select rating" %>
+          </div>
+          <div class="col-md-12 form-group has-feedback">
+            <%= f.input :feedback %>
+          </div>
+          <div class="col-md-12 form-group text-right">
+            <%=f.submit "Submit", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
