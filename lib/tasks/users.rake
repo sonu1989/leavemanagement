@@ -72,5 +72,15 @@ namespace :users do
     end
   end
 
+  task send_review_reminder: :environment do
+    date = Time.zone.now
+    if [1,2,3,4,5].include?(date.wday)
+      review_requests = ReviewRequest.pending
+      review_requests.each do |review_request|
+        UserMailer.review_requests_reminder_notification(review_request).deliver_now
+      end
+    end
+  end
+
 end
 

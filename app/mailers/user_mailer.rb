@@ -105,4 +105,14 @@ class UserMailer < ApplicationMailer
     @employee = @review.employee
     mail(to: @employee.email, subject: "Feedback received for #{@review.created_at.strftime('%B, %Y')}")
   end
+
+  def review_requests_reminder_notification(review_request)
+    attachments.inline['logo.png'] = File.read("#{Rails.root}/app/assets/images/logo.png")
+    attachments.inline['logo2.png'] = File.read("#{Rails.root}/app/assets/images/logo2.png")
+    @review_request = review_request
+    @employee = @review_request.employee
+    @manager = @review_request.reviewer
+    mail(to: @manager.email, subject: "Review reminder for #{@employee.user_name}")
+  end
+
 end
