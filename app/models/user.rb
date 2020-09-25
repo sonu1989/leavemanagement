@@ -51,9 +51,14 @@ class User < ActiveRecord::Base
   end
 
   def over_all_rating
-    self.reviews.where(created_at: (Time.zone.now.beginning_of_day)..((Time.zone.now - 12.months).end_of_day))
+    self.reviews.where(created_at: ((Time.zone.now - 12.months).end_of_day)..(Time.zone.now.beginning_of_day))
   end
-  
+
+  def avergae_rating
+    reviews = over_all_rating
+    reviews.map(&:rating).sum / reviews.size if reviews.size > 0
+  end
+
   def unapproved_leaves
     unapproved_leave = self.leaves.where("start_date >= ? AND start_date <= ?", Time.now.beginning_of_month, Time.now.end_of_month).where(status: 'Unapproved').count
   end

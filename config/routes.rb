@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     resources :leaves do
       patch :cancel, on: :member
     end
+    
+    get 'reviews/employees' => 'reviews#employees_list', as: :employee_list
+    get 'employees/:employee_id/reviews' => 'reviews#index', as: :employee_review_list
+    get 'employees/:employee_id/reviews/:id' => 'reviews#show', as: :review
 
   end 
   # Example of regular route:

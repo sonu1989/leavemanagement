@@ -1,0 +1,35 @@
+<div class="x_title">
+  <h2>Employee List</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="row">
+  <div class="">
+    <div class="col-md-12">     
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Emp ID</th>
+              <th>Emp Name</th>
+              <th>Overall Rating</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @employees.each do |employee|%>
+              <tr>
+                <td><%= employee.employee_id %></td>
+                <td><%= employee.user_name %></td>
+                <td><%= employee.avergae_rating.round(1) rescue '' %></td>
+                <td>
+                 <%= link_to 'All Reviews', admin_employee_review_list_path(employee.id) %>
+               </td>             
+              </tr>
+            <% end %>
+          </tbody>  
+        </table>
+    </div>
+  </div> 
+</div>
+<div class="pull-right">
+  <%= will_paginate @employees, renderer: BootstrapPagination::Rails %>
+</div>

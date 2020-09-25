@@ -53,6 +53,10 @@
                 <i class="fa fa-bell"></i>Circulars
                <% end %>
             </li>
+            <li><%= link_to admin_employee_list_path do %>
+              <i class="fa fa-pencil"></i>Reviews
+              <% end %>
+            </li>
 
           <% elsif current_user && current_user.employee? %>
             <li><%= link_to root_path do %>

@@ -67,7 +67,7 @@ namespace :users do
     date = Time.zone.now
     if (Time.now.day == (date.end_of_month - 2.days).day)
       User.employee.each do |employee|
-        ReviewRequest.create(user_id: employee.id, reviewer_id: employee.manager_id, status: ReviewRequest.statuses['pending'])
+        ReviewRequest.create(user_id: employee.id, reviewer_id: employee.manager_id, status: ReviewRequest.statuses['pending'], created_at: Time.zone.now - 10.days)
       end
     end
   end
