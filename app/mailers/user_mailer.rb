@@ -95,7 +95,7 @@ class UserMailer < ApplicationMailer
     @review_request = review_request
     @employee = @review_request.employee
     @manager = @review_request.reviewer
-    mail(to: @manager.email, subject: "Review request for #{@employee.user_name}")
+    mail(to: @manager.email, subject: "Review request for #{@employee.user_name} for #{@review_request.created_at.strftime('%B, %Y')}")
   end
 
   def send_feedback_notification(review)
