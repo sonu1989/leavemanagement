@@ -65,7 +65,7 @@ namespace :users do
 
   task send_review_requests: :environment do
     date = Time.zone.now
-    if (Time.now.day == (date.end_of_month - 2.days).day)
+    if (date.day == 29)
       User.employee.each do |employee|
         ReviewRequest.create(user_id: employee.id, reviewer_id: employee.manager_id, status: ReviewRequest.statuses['pending'], created_at: Time.zone.now - 10.days)
       end
